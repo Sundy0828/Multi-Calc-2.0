@@ -7,14 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A362016E20633BBB00228479 /* AthleteListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A362016D20633BBB00228479 /* AthleteListController.swift */; };
+		A362017220635C4C00228479 /* CustomClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A362017120635C4C00228479 /* CustomClasses.swift */; };
+		A36201742063603000228479 /* EventListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201732063603000228479 /* EventListController.swift */; };
+		A36201762063609400228479 /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201752063609400228479 /* AddEventController.swift */; };
+		A36201782063773E00228479 /* CustomEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201772063773E00228479 /* CustomEventCell.swift */; };
 		A373C3E820608475003574F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A373C3E720608475003574F6 /* AppDelegate.swift */; };
 		A373C3EA20608475003574F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A373C3E920608475003574F6 /* ViewController.swift */; };
 		A373C3ED20608475003574F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A373C3EB20608475003574F6 /* Main.storyboard */; };
 		A373C3EF20608475003574F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A373C3EE20608475003574F6 /* Assets.xcassets */; };
 		A373C3F220608475003574F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A373C3F020608475003574F6 /* LaunchScreen.storyboard */; };
+		A373C3FA206086B5003574F6 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A373C3F9206086B5003574F6 /* CustomTableViewCell.swift */; };
+		A3A1A3F32063267E00647A92 /* TrackSizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A1A3F22063267E00647A92 /* TrackSizeController.swift */; };
+		A3A1A3F520632A4C00647A92 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A1A3F420632A4C00647A92 /* SettingsController.swift */; };
+		A3A1A3F72063398400647A92 /* AddAthleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A1A3F62063398400647A92 /* AddAthleteController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A362016D20633BBB00228479 /* AthleteListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthleteListController.swift; sourceTree = "<group>"; };
+		A362017120635C4C00228479 /* CustomClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomClasses.swift; sourceTree = "<group>"; };
+		A36201732063603000228479 /* EventListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListController.swift; sourceTree = "<group>"; };
+		A36201752063609400228479 /* AddEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventController.swift; sourceTree = "<group>"; };
+		A36201772063773E00228479 /* CustomEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventCell.swift; sourceTree = "<group>"; };
 		A373C3E420608475003574F6 /* Multi Calc 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Multi Calc 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A373C3E720608475003574F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A373C3E920608475003574F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +36,10 @@
 		A373C3EE20608475003574F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A373C3F120608475003574F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A373C3F320608475003574F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A373C3F9206086B5003574F6 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		A3A1A3F22063267E00647A92 /* TrackSizeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSizeController.swift; sourceTree = "<group>"; };
+		A3A1A3F420632A4C00647A92 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		A3A1A3F62063398400647A92 /* AddAthleteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAthleteController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +74,19 @@
 			children = (
 				A373C3E720608475003574F6 /* AppDelegate.swift */,
 				A373C3E920608475003574F6 /* ViewController.swift */,
+				A3A1A3F420632A4C00647A92 /* SettingsController.swift */,
+				A3A1A3F22063267E00647A92 /* TrackSizeController.swift */,
+				A3A1A3F62063398400647A92 /* AddAthleteController.swift */,
+				A362016D20633BBB00228479 /* AthleteListController.swift */,
+				A36201752063609400228479 /* AddEventController.swift */,
+				A36201732063603000228479 /* EventListController.swift */,
 				A373C3EB20608475003574F6 /* Main.storyboard */,
 				A373C3EE20608475003574F6 /* Assets.xcassets */,
 				A373C3F020608475003574F6 /* LaunchScreen.storyboard */,
 				A373C3F320608475003574F6 /* Info.plist */,
+				A362017120635C4C00228479 /* CustomClasses.swift */,
+				A373C3F9206086B5003574F6 /* CustomTableViewCell.swift */,
+				A36201772063773E00228479 /* CustomEventCell.swift */,
 			);
 			path = "Multi Calc 2.0";
 			sourceTree = "<group>";
@@ -136,8 +163,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3A1A3F32063267E00647A92 /* TrackSizeController.swift in Sources */,
+				A3A1A3F72063398400647A92 /* AddAthleteController.swift in Sources */,
+				A36201782063773E00228479 /* CustomEventCell.swift in Sources */,
+				A36201762063609400228479 /* AddEventController.swift in Sources */,
+				A3A1A3F520632A4C00647A92 /* SettingsController.swift in Sources */,
+				A373C3FA206086B5003574F6 /* CustomTableViewCell.swift in Sources */,
 				A373C3EA20608475003574F6 /* ViewController.swift in Sources */,
+				A362016E20633BBB00228479 /* AthleteListController.swift in Sources */,
 				A373C3E820608475003574F6 /* AppDelegate.swift in Sources */,
+				A36201742063603000228479 /* EventListController.swift in Sources */,
+				A362017220635C4C00228479 /* CustomClasses.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
