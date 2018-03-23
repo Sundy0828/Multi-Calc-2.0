@@ -39,7 +39,8 @@ class EventListController: UITableViewController {
     // edit selection
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Edit") { (action, view, completion) in
-            
+            GlobalVariable.eventsIndex = indexPath.row
+            self.performSegue(withIdentifier: "editEvent", sender: self)
         }
         action.backgroundColor = UIColor.darkGray
         

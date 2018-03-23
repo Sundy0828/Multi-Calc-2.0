@@ -21,6 +21,7 @@ struct GlobalVariable{
     static var athletesIndex = -1
     static var keyAthletes = "athletesArray"
     static var eventsIndex = -1
+    static var eventType = ""
 }
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -56,7 +57,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var timePicker: UIPickerView!
     @IBOutlet var distPicker: UIPickerView!
     
-    var eventsArr = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
+    var eventsArr = [String]()
     
     // set all arrays
     func setArrays() {
@@ -109,7 +110,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         distPicker.isHidden = true
         
         // set events based on what event type user chose
-        //setEventsArray(eventSelected: athleteEvent.eventType)
+        setEventsArray(eventSelected: GlobalVariable.eventType)
         
         // set arrays picker and table
         setArrays()
@@ -136,35 +137,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func setEventsArray(eventSelected : String) {
         switch (eventSelected) {
         case "Mens Outdoor Dec" :
-            athleteEvent.events = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
+            eventsArr = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
             sex = "men"
             break;
         case "Mens Outdoor Pen" :
-            athleteEvent.events = ["LJ", "JT", "200", "DT", "1500"]
+            eventsArr = ["LJ", "JT", "200", "DT", "1500"]
             sex = "men"
             break;
         case "Mens Indoor Hep" :
-            athleteEvent.events = ["60", "LJ", "SP", "HJ", "60H", "PV", "1000"]
+            eventsArr = ["60", "LJ", "SP", "HJ", "60H", "PV", "1000"]
             sex = "men"
             break;
         case "Mens Indoor Pen" :
-            athleteEvent.events = ["60H", "LJ", "SP", "HJ", "1000"]
+            eventsArr = ["60H", "LJ", "SP", "HJ", "1000"]
             sex = "men"
             break;
         case "Womens Outdoor Hep" :
-            athleteEvent.events = ["100H", "HJ", "SP", "200", "LJ", "JT", "800"]
+            eventsArr = ["100H", "HJ", "SP", "200", "LJ", "JT", "800"]
             sex = "women"
             break;
         case "Womens Outdoor Dec" :
-            athleteEvent.events = ["100", "DT", "PV", "JT", "400", "100H", "LJ", "SP", "HJ", "1500"]
+            eventsArr = ["100", "DT", "PV", "JT", "400", "100H", "LJ", "SP", "HJ", "1500"]
             sex = "women"
             break;
         case "Womens Indoor Pen" :
-            athleteEvent.events = ["60H", "HJ", "SP", "LJ", "800"]
+            eventsArr = ["60H", "HJ", "SP", "LJ", "800"]
             sex = "women"
             break;
         default:
-            athleteEvent.events = [String]()
+            eventsArr = [String]()
         }
     }
 

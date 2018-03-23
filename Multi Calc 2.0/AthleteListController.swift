@@ -39,7 +39,8 @@ class AthleteListController: UITableViewController {
     // edit selection
     func editAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Edit") { (action, view, completion) in
-            
+            GlobalVariable.athletesIndex = indexPath.row
+            self.performSegue(withIdentifier: "editAthlete", sender: self)
         }
         action.backgroundColor = UIColor.darkGray
         

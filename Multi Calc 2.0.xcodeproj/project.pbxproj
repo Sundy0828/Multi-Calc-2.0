@@ -13,6 +13,9 @@
 		A36201762063609400228479 /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201752063609400228479 /* AddEventController.swift */; };
 		A36201782063773E00228479 /* CustomEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201772063773E00228479 /* CustomEventCell.swift */; };
 		A362017A206489F700228479 /* DetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3620179206489F700228479 /* DetailsController.swift */; };
+		A362017C2064A73200228479 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A362017B2064A73200228479 /* MainViewController.swift */; };
+		A362017E2064AE1100228479 /* EditAthleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A362017D2064AE1100228479 /* EditAthleteController.swift */; };
+		A36201802064B2D600228479 /* EditEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A362017F2064B2D600228479 /* EditEventController.swift */; };
 		A373C3E820608475003574F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A373C3E720608475003574F6 /* AppDelegate.swift */; };
 		A373C3EA20608475003574F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A373C3E920608475003574F6 /* ViewController.swift */; };
 		A373C3ED20608475003574F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A373C3EB20608475003574F6 /* Main.storyboard */; };
@@ -31,6 +34,9 @@
 		A36201752063609400228479 /* AddEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventController.swift; sourceTree = "<group>"; };
 		A36201772063773E00228479 /* CustomEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventCell.swift; sourceTree = "<group>"; };
 		A3620179206489F700228479 /* DetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsController.swift; sourceTree = "<group>"; };
+		A362017B2064A73200228479 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		A362017D2064AE1100228479 /* EditAthleteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAthleteController.swift; sourceTree = "<group>"; };
+		A362017F2064B2D600228479 /* EditEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventController.swift; sourceTree = "<group>"; };
 		A373C3E420608475003574F6 /* Multi Calc 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Multi Calc 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A373C3E720608475003574F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A373C3E920608475003574F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				A373C3E720608475003574F6 /* AppDelegate.swift */,
+				A362017B2064A73200228479 /* MainViewController.swift */,
 				A373C3E920608475003574F6 /* ViewController.swift */,
 				A3620179206489F700228479 /* DetailsController.swift */,
 				A3A1A3F420632A4C00647A92 /* SettingsController.swift */,
@@ -90,6 +97,8 @@
 				A362017120635C4C00228479 /* CustomClasses.swift */,
 				A373C3F9206086B5003574F6 /* CustomTableViewCell.swift */,
 				A36201772063773E00228479 /* CustomEventCell.swift */,
+				A362017D2064AE1100228479 /* EditAthleteController.swift */,
+				A362017F2064B2D600228479 /* EditEventController.swift */,
 			);
 			path = "Multi Calc 2.0";
 			sourceTree = "<group>";
@@ -166,10 +175,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A36201802064B2D600228479 /* EditEventController.swift in Sources */,
 				A3A1A3F32063267E00647A92 /* TrackSizeController.swift in Sources */,
+				A362017C2064A73200228479 /* MainViewController.swift in Sources */,
 				A3A1A3F72063398400647A92 /* AddAthleteController.swift in Sources */,
 				A36201782063773E00228479 /* CustomEventCell.swift in Sources */,
 				A36201762063609400228479 /* AddEventController.swift in Sources */,
+				A362017E2064AE1100228479 /* EditAthleteController.swift in Sources */,
 				A362017A206489F700228479 /* DetailsController.swift in Sources */,
 				A3A1A3F520632A4C00647A92 /* SettingsController.swift in Sources */,
 				A373C3FA206086B5003574F6 /* CustomTableViewCell.swift in Sources */,
