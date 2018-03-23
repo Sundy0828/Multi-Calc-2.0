@@ -45,10 +45,14 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
     }
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
+        if eventName.text != "" {
         // set event name and event type in array
         GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].name = eventName.text!
         GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].eventType = eventType
         self.navigationController?.popViewController(animated: true)
+        }else {
+            alert(message: "Make sure an event is selected and a name is given!")
+        }
     }
     // hide keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -97,5 +101,15 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
         selectedItem = indexPath.row
         eventType = events[indexPath.row]
         eventTbl.reloadData()
+    }
+    // alert function
+    func alert(message: String, title: String = "Error") {
+        //calls alert controller with tital and message
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        //creates and adds ok button
+        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        alertController.addAction(OKAction)
+        //shows
+        self.present(alertController, animated: true, completion: nil)
     }
 }

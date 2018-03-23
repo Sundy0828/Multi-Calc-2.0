@@ -197,7 +197,7 @@
         <scene sceneID="UyP-CT-ue4">
             <objects>
                 <tabBarController title="Events" id="t8Y-Tk-Rxb" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="wp9-98-Eq3">
+                    <navigationItem key="navigationItem" title="Events" id="wp9-98-Eq3">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="haZ-Iu-zs1"/>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="STB-9M-Kaf">
@@ -289,7 +289,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TQq-IR-aa6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3212" y="-222"/>
+            <point key="canvasLocation" x="3278" y="-242"/>
         </scene>
         <!--Edit Event-->
         <scene sceneID="yYf-Br-lwf">
@@ -359,7 +359,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yl1-zo-LkN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3279" y="-1592"/>
+            <point key="canvasLocation" x="3278" y="-1661"/>
         </scene>
         <!--Athlete's Events-->
         <scene sceneID="L33-nM-3cp">
@@ -447,12 +447,15 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tbc-0g-mrl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3280" y="-893"/>
+            <point key="canvasLocation" x="3278" y="-944"/>
         </scene>
         <!--Athletes-->
         <scene sceneID="Xiv-cj-7zT">
             <objects>
                 <tabBarController title="Athletes" id="80V-ao-Pbb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Athletes" id="3lp-B0-KGm">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="p9E-sb-zyR"/>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7mS-eU-9f8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -653,7 +656,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="80V-ao-Pbb" kind="show" identifier="athlete" id="QPM-BR-418"/>
+                                            <segue destination="80V-ao-Pbb" kind="show" identifier="" id="QPM-BR-418"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -695,7 +698,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JSs-R6-SRT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="sectionIndexBackgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
                             <tableViewSection headerTitle="Track Size" id="st2-Al-S3n">
@@ -1353,7 +1356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cPi-6l-2zI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4260" y="-893"/>
+            <point key="canvasLocation" x="4143" y="-944"/>
         </scene>
     </scenes>
     <resources>

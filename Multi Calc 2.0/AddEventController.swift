@@ -12,8 +12,8 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // avaliable events
     var events = ["Mens Outdoor Dec", "Mens Outdoor Pen", "Mens Indoor Hep", "Mens Indoor Pen", "Womens Outdoor Hep", "Womens Outdoor Dec", "Womens Indoor Pen"]
-    var selectedItem = -1
-    var eventType = ""
+    var selectedItem = 0
+    var eventType = "Mens Outdoor Dec"
     let userSettings = UserDefaults.standard
     
     // outlets
@@ -46,11 +46,15 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
-        let event = Event(name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
-        GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
-        eventName.text = ""
-        selectedItem = -1
-        eventTbl.reloadData()
+        if eventName.text != "" {
+            let event = Event(name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
+            GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
+            eventName.text = ""
+            selectedItem = -1
+            eventTbl.reloadData()
+        }else {
+            alert(message: "Make sure an event is selected and a name is given!")
+        }
     }
     // hide keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -98,5 +102,15 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         selectedItem = indexPath.row
         eventType = events[indexPath.row]
         eventTbl.reloadData()
+    }
+    // alert function
+    func alert(message: String, title: String = "Error") {
+        //calls alert controller with tital and message
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        //creates and adds ok button
+        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        alertController.addAction(OKAction)
+        //shows
+        self.present(alertController, animated: true, completion: nil)
     }
 }

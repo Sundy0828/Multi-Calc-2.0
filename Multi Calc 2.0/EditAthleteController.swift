@@ -22,7 +22,21 @@ class EditAthleteController: UIViewController, UITextFieldDelegate {
     }
     // set changes in array
     @IBAction func donePressed(_ sender: Any) {
-        GlobalVariable.athletesArray[GlobalVariable.athletesIndex].name = athleteName.text!
-        self.navigationController?.popViewController(animated: true)
+        if athleteName.text != "" {
+            GlobalVariable.athletesArray[GlobalVariable.athletesIndex].name = athleteName.text!
+            self.navigationController?.popViewController(animated: true)
+        }else {
+            alert(message: "Make sure name is given!")
+        }
+    }
+    // alert function
+    func alert(message: String, title: String = "Error") {
+        //calls alert controller with tital and message
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        //creates and adds ok button
+        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        alertController.addAction(OKAction)
+        //shows
+        self.present(alertController, animated: true, completion: nil)
     }
 }

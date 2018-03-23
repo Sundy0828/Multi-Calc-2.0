@@ -37,10 +37,24 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
         return true
     }
     @IBAction func addAthletePressed(_ sender: Any) {
-        // add values to athlete array and set textfield to ""
-        let name = athleteName.text!
-        let athlete: Athlete = Athlete(name: name, events: [Event]())
-        GlobalVariable.athletesArray.append(athlete)
-        athleteName.text = ""
+        if athleteName.text != "" {
+            // add values to athlete array and set textfield to ""
+            let name = athleteName.text!
+            let athlete: Athlete = Athlete(name: name, events: [Event]())
+            GlobalVariable.athletesArray.append(athlete)
+            athleteName.text = ""
+        }else {
+            alert(message: "Make sure name is given!")
+        }
+    }
+    // alert function
+    func alert(message: String, title: String = "Error") {
+        //calls alert controller with tital and message
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        //creates and adds ok button
+        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        alertController.addAction(OKAction)
+        //shows
+        self.present(alertController, animated: true, completion: nil)
     }
 }
