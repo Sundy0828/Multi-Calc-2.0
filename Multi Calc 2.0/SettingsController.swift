@@ -11,6 +11,7 @@ import UIKit
 
 class SettingsController: UITableViewController {
     
+    // keys to save values to phone
     let userSettings = UserDefaults.standard
     var distStepper = 100.0
     let keyAuto = "distChoice"
@@ -18,8 +19,10 @@ class SettingsController: UITableViewController {
     let keyTheme = "theme"
     let keyLapDist = "lapDist"
     
+    // track size label
     @IBOutlet weak var trackSizeLbl: UILabel!
     
+    // cells
     @IBOutlet var fatTimeCell: UITableViewCell!
     @IBOutlet var handTimeCell: UITableViewCell!
     @IBOutlet var meterCell: UITableViewCell!
@@ -29,11 +32,13 @@ class SettingsController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // style cells
         style()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //style cells
         style()
     }
     @IBAction func refreshPressed(_ sender: Any) {
@@ -67,7 +72,7 @@ class SettingsController: UITableViewController {
         self.present(dialogMessage, animated: true, completion: nil)
     }
     func style() {
-        
+        // set check marks based on values selected
         if GlobalVariable.auto == false {
             fatTimeCell.accessoryType = .none
             handTimeCell.accessoryType = .checkmark
@@ -89,6 +94,8 @@ class SettingsController: UITableViewController {
             darkCell.accessoryType = .checkmark
             lightCell.accessoryType = .none
         }
+        
+        // set distance text
         trackSizeLbl.text = "\(GlobalVariable.distStepperVal) meters"
         //changeTheme()
     }
@@ -98,6 +105,7 @@ class SettingsController: UITableViewController {
         let section = indexPath.section
         let row = indexPath.row
         
+        // based on section and row selected save data to phone and in app
         if section == 1 {
             if row == 0 {
                 GlobalVariable.auto = true

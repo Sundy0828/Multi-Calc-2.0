@@ -8,17 +8,23 @@
 
 import UIKit
 
+// class for event for each athlete
 class Event {
     var name: String
     var eventType: String
-    var results: [String]
+    var events: [String]
+    var marks: [[String]]
+    var scores: [String]
     
-    init(name: String, eventType: String, results: [String]) {
+    init(name: String, eventType: String, events: [String], marks: [[String]], scores: [String]) {
         self.name = name
         self.eventType = eventType
-        self.results = results
+        self.events = events
+        self.marks = marks
+        self.scores = scores
     }
 }
+// class for each athlete
 class Athlete {
     var name: String
     var events: [Event]

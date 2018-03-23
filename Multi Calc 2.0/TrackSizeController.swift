@@ -10,21 +10,27 @@ import UIKit
 
 class TrackSizeController: UIViewController {
     
+    // buttons in custom segmented control
     @IBOutlet var stackBtnVal1: UIButton!
     @IBOutlet var stackBtnVal2: UIButton!
     @IBOutlet var stackBtnVal3: UIButton!
     @IBOutlet var stackBtnVal4: UIButton!
     @IBOutlet var stackBtnVal5: UIButton!
     
+    // height of stack
     @IBOutlet var stackHeight: NSLayoutConstraint!
     
+    // view custom segmented control is in
     @IBOutlet var stepperView: UIView!
+    
     // "stepper" buttons and segmented control
     @IBOutlet weak var stepperMinus: UIButton!
     @IBOutlet weak var stepperPlus: UIButton!
     
+    // lap dist
     @IBOutlet weak var lapDist: UILabel!
     
+    // keys, timers and basic variables
     let userSettings = UserDefaults.standard
     var distStepper = 100.0
     var btnTagClicked = 4
@@ -36,7 +42,7 @@ class TrackSizeController: UIViewController {
     var timerOne: Timer!
     var stackBtnVal = [UIButton]()
     
-    // set big view height to be 35% of screen
+    // get height and width of phone
     let height = UIScreen.main.bounds.size.height
     let width = UIScreen.main.bounds.size.width
     
@@ -46,12 +52,13 @@ class TrackSizeController: UIViewController {
         
     }
     override func viewDidLoad() {
+        super.viewDidLoad()
+        // add buttons to array so they dont change positions
         stackBtnVal.append(stackBtnVal1)
         stackBtnVal.append(stackBtnVal2)
         stackBtnVal.append(stackBtnVal3)
         stackBtnVal.append(stackBtnVal4)
         stackBtnVal.append(stackBtnVal5)
-        super.viewDidLoad()
         
         // style buttons
         styleBtnBlue(btn: stepperPlus, heightT: 30)
@@ -62,15 +69,18 @@ class TrackSizeController: UIViewController {
         }
         styleBtnBlue(btn: stackBtnVal[4], heightT: 17)
         
+        // style segmented control
         let stackBtnHeight = 50/667*width
         stackHeight.constant = stackBtnHeight
         stepperView.clipsToBounds = true
         stepperView.layer.cornerRadius = stackBtnHeight/2
         
+        // set text size of lap dist
         let sizeS = CGFloat(Int(20/375*width))
         let smallFont = UIFont(name: "AvenirNext-Bold", size: sizeS)
         lapDist.font = smallFont
         
+        // set value of lap dist
         lapDist.text = "Track Size: \(GlobalVariable.distStepperVal) meters"
         //changeTheme()
     }
@@ -89,7 +99,9 @@ class TrackSizeController: UIViewController {
         }
     }
     @IBAction func minusDownBtn(_ sender: Any) {
+        // subtract values based on stepper
         minus()
+        // repeat minus function to move values faster if held down
         timerOne = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:#selector(minus), userInfo: nil, repeats: true)
     }
     // subtract values from lap split distance
@@ -100,11 +112,9 @@ class TrackSizeController: UIViewController {
         // if value == 1609.344 then make it go to 1600 so its an even number
         if GlobalVariable.distStepperVal - distStepper < 1600 && GlobalVariable.distStepperVal > 1600 {
             GlobalVariable.distStepperVal = 1600
-            //lapSplit()
             //make sure it doesnt get less than 100 meters
         }else if GlobalVariable.distStepperVal - distStepper >= 100{
             GlobalVariable.distStepperVal -= distStepper
-            //lapSplit()
         }else {
             alert(message: "Sorry, no laps less than 100 meters!")
             timerOne.invalidate()
@@ -137,10 +147,13 @@ class TrackSizeController: UIViewController {
         lapDist.text = "Track Size: \(GlobalVariable.distStepperVal)  meters"
         userSettings.set(GlobalVariable.distStepperVal, forKey: keyLapDist)
     }
+    
+    // style button blue
     func styleBtnBlue(btn: UIButton, heightT: CGFloat) {
         //set color to blue
         let btnColor = GlobalVariable.myBlue.cgColor
         
+        // set text size
         let sizeS = CGFloat(Int(heightT/375*width))
         let smallFont = UIFont(name: "AvenirNext-Bold", size: sizeS)
         btn.titleLabel?.font = smallFont
@@ -153,10 +166,12 @@ class TrackSizeController: UIViewController {
         btn.setTitleColor(.black, for: .normal)
         
     }
+    // style button white
     func styleBtnWhite(btn: UIButton, heightT: CGFloat) {
         //set color to white
         let btnColor = UIColor.white.cgColor
         
+        // set text size
         let sizeS = CGFloat(Int(heightT/375*width))
         let smallFont = UIFont(name: "AvenirNext-Bold", size: sizeS)
         btn.titleLabel?.font = smallFont

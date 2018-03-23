@@ -15,6 +15,7 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // hide keyboard and change title
         self.hideKeyboardWhenTappedAround()
         self.athleteName.delegate = self
         if let tabController = self.parent as? UITabBarController {
@@ -23,23 +24,23 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        // hide keyboard and change title
         self.hideKeyboardWhenTappedAround()
-        
         self.athleteName.delegate = self
-        
         if let tabController = self.parent as? UITabBarController {
             tabController.navigationItem.title = "Add Athlete"
         }
     }
+    // hide keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     @IBAction func addAthletePressed(_ sender: Any) {
+        // add values to athlete array and set textfield to ""
         let name = athleteName.text!
         let athlete: Athlete = Athlete(name: name, events: [Event]())
         GlobalVariable.athletesArray.append(athlete)
-        //userSettings.set(GlobalVariable.athletesArray, forKey: GlobalVariable.keyAthletes)
         athleteName.text = ""
     }
 }

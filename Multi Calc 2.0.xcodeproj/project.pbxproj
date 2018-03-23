@@ -12,6 +12,7 @@
 		A36201742063603000228479 /* EventListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201732063603000228479 /* EventListController.swift */; };
 		A36201762063609400228479 /* AddEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201752063609400228479 /* AddEventController.swift */; };
 		A36201782063773E00228479 /* CustomEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36201772063773E00228479 /* CustomEventCell.swift */; };
+		A362017A206489F700228479 /* DetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3620179206489F700228479 /* DetailsController.swift */; };
 		A373C3E820608475003574F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A373C3E720608475003574F6 /* AppDelegate.swift */; };
 		A373C3EA20608475003574F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A373C3E920608475003574F6 /* ViewController.swift */; };
 		A373C3ED20608475003574F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A373C3EB20608475003574F6 /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 		A36201732063603000228479 /* EventListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListController.swift; sourceTree = "<group>"; };
 		A36201752063609400228479 /* AddEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventController.swift; sourceTree = "<group>"; };
 		A36201772063773E00228479 /* CustomEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventCell.swift; sourceTree = "<group>"; };
+		A3620179206489F700228479 /* DetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsController.swift; sourceTree = "<group>"; };
 		A373C3E420608475003574F6 /* Multi Calc 2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Multi Calc 2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A373C3E720608475003574F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A373C3E920608475003574F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				A373C3E720608475003574F6 /* AppDelegate.swift */,
 				A373C3E920608475003574F6 /* ViewController.swift */,
+				A3620179206489F700228479 /* DetailsController.swift */,
 				A3A1A3F420632A4C00647A92 /* SettingsController.swift */,
 				A3A1A3F22063267E00647A92 /* TrackSizeController.swift */,
 				A3A1A3F62063398400647A92 /* AddAthleteController.swift */,
@@ -167,6 +170,7 @@
 				A3A1A3F72063398400647A92 /* AddAthleteController.swift in Sources */,
 				A36201782063773E00228479 /* CustomEventCell.swift in Sources */,
 				A36201762063609400228479 /* AddEventController.swift in Sources */,
+				A362017A206489F700228479 /* DetailsController.swift in Sources */,
 				A3A1A3F520632A4C00647A92 /* SettingsController.swift in Sources */,
 				A373C3FA206086B5003574F6 /* CustomTableViewCell.swift in Sources */,
 				A373C3EA20608475003574F6 /* ViewController.swift in Sources */,

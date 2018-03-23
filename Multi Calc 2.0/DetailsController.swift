@@ -1,29 +1,16 @@
 //
-//  ViewController.swift
+//  DetailsController.swift
 //  Multi Calc 2.0
 //
-//  Created by Jerrod on 3/19/18.
+//  Created by Jerrod on 3/22/18.
 //  Copyright © 2018 Jerrod Sunderland. All rights reserved.
 //
 
 import UIKit
 
-// global variables used throughout app
-struct GlobalVariable{
-    static let myBlue = UIColor(red: 51/255, green: 161/255, blue: 252/255, alpha:1.0)
-    static var markArray = [[String]]()
-    static var scoreArray = [String]()
-    static var measure : Bool = true
-    static var auto : Bool = true
-    static var theme : String = "light"
-    static var distStepperVal : Double = 400.0
-    static var athletesArray = [Athlete]()
-    static var athletesIndex = -1
-    static var keyAthletes = "athletesArray"
-    static var eventsIndex = -1
-}
-
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+    // set athlete event by going through list of athletes and event
+    let athleteEvent = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex]
     
     // base values for function
     var eventClicked = -1
@@ -40,34 +27,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var pickerDistTwo = [String]()
     var pickerDistThree = [String]()
     
-    // save key names
-    let keyAuto = "distChoice"
-    let keyMeasure = "paceDistChoice"
-    let keyTheme = "theme"
-    let keyLapDist = "lapDist"
-    let userSettings = UserDefaults.standard
-    
     // set big view height to be 35% of screen
     let height = UIScreen.main.bounds.size.height
     let width = UIScreen.main.bounds.size.width
-
+    
     // table and picker outlets
     @IBOutlet var eventsTbl: UITableView!
     @IBOutlet var timePicker: UIPickerView!
     @IBOutlet var distPicker: UIPickerView!
     
-    var eventsArr = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
-    
     // set all arrays
     func setArrays() {
         // put number in mark and score arrays
-        for _ in 0...eventsArr.count - 1 {
+        for _ in 0...athleteEvent.events.count - 1 {
             var holdArr = [String]()
             holdArr.append("00")
             holdArr.append("00")
             holdArr.append("00")
-            GlobalVariable.markArray.append(holdArr)
-            GlobalVariable.scoreArray.append("0000")
+            athleteEvent.marks.append(holdArr)
+            athleteEvent.scores.append("0000")
         }
         
         // put numbers 0 - 99 in for picker components
@@ -105,33 +83,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         distPicker.dataSource = self
         distPicker.delegate = self
         
+        // hide pickers
         timePicker.isHidden = true
         distPicker.isHidden = true
         
         // set events based on what event type user chose
-        //setEventsArray(eventSelected: athleteEvent.eventType)
+        setEventsArray(eventSelected: athleteEvent.eventType)
         
         // set arrays picker and table
         setArrays()
-        
-        // set varables if values were saved
-        if (userSettings.value(forKey: keyAuto) as! Bool?) != nil {
-            GlobalVariable.auto = (userSettings.value(forKey: keyAuto) as! Bool?)!
-        }
-        if (userSettings.value(forKey: keyMeasure) as! Bool?) != nil {
-            GlobalVariable.measure = (userSettings.value(forKey: keyMeasure) as! Bool?)!
-        }
-        if (userSettings.value(forKey: keyTheme) as! String?) != nil {
-            GlobalVariable.theme = (userSettings.value(forKey: keyTheme) as! String?)!
-        }
-        if (userSettings.value(forKey: keyLapDist) as! Double?) != nil {
-            GlobalVariable.distStepperVal = (userSettings.value(forKey: keyLapDist) as! Double?)!
-        }
-        if (userSettings.value(forKey: GlobalVariable.keyAthletes) as! [Athlete]?) != nil {
-            GlobalVariable.athletesArray = (userSettings.value(forKey: GlobalVariable.keyAthletes) as! [Athlete]?)!
-        }
-        
     }
+    
     // each multi has a set of events and these are the sets for each event
     func setEventsArray(eventSelected : String) {
         switch (eventSelected) {
@@ -167,13 +129,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             athleteEvent.events = [String]()
         }
     }
-
+    
     //
     // table section
     //
     // number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return eventsArr.count
+        return athleteEvent.events.count
     }
     // height of row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -200,20 +162,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.calcLbl.backgroundColor = GlobalVariable.myBlue
         }
         
-        // set calc label and round courners
-        cell.calcLbl.text = "Calculate \(eventsArr[indexPath.row])"
+        // set calc label and round corners
+        cell.calcLbl.text = "Calculate \(athleteEvent.events[indexPath.row])"
         cell.calcLbl.layer.cornerRadius = corner
         cell.calcLbl.clipsToBounds = true
         
         // set marks based if it needs a time or distance
-        if eventsArr[indexPath.row].contains("0") {
-            cell.markLbl.text = GlobalVariable.markArray[indexPath.row][0] + ":" + GlobalVariable.markArray[indexPath.row][1] + "." + GlobalVariable.markArray[indexPath.row][2]
+        if athleteEvent.events[indexPath.row].contains("0") {
+            cell.markLbl.text = athleteEvent.marks[indexPath.row][0] + ":" + athleteEvent.marks[indexPath.row][1] + "." + athleteEvent.marks[indexPath.row][2]
         }else {
-            cell.markLbl.text = GlobalVariable.markArray[indexPath.row][0] + "." + GlobalVariable.markArray[indexPath.row][1] + GlobalVariable.markArray[indexPath.row][2] + measure
+            cell.markLbl.text = athleteEvent.marks[indexPath.row][0] + "." + athleteEvent.marks[indexPath.row][1] + athleteEvent.marks[indexPath.row][2] + measure
         }
         
         // set scores
-        cell.scoreLbl.text = GlobalVariable.scoreArray[indexPath.row]
+        cell.scoreLbl.text = athleteEvent.scores[indexPath.row]
         
         return cell
     }
@@ -221,7 +183,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // decide which picker view to hide
         var hidden = false
-        if eventsArr[indexPath.row].contains("0") {
+        if athleteEvent.events[indexPath.row].contains("0") {
             hidden = true
         }
         timePicker.isHidden = !hidden
@@ -354,21 +316,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             three = pickerDistThree[selectedThree]
         }
         // set each picker component to correct area
-        GlobalVariable.markArray[eventClicked][0] = one
-        GlobalVariable.markArray[eventClicked][1] = two
-        GlobalVariable.markArray[eventClicked][2] = three
+        athleteEvent.marks[eventClicked][0] = one
+        athleteEvent.marks[eventClicked][1] = two
+        athleteEvent.marks[eventClicked][2] = three
         
         // get points and set them
-        let points = getPoints(event: eventsArr[eventClicked], selected: eventClicked)
-        GlobalVariable.scoreArray[eventClicked] = "0"
+        let points = getPoints(event: athleteEvent.events[eventClicked], selected: eventClicked)
+        athleteEvent.scores[eventClicked] = "0"
         if !points.isNaN {
             if one != "00" || two != "00" || three != "00" {
-                GlobalVariable.scoreArray[eventClicked] = String(Int(points))
+                athleteEvent.scores[eventClicked] = String(Int(points))
             }
         }
         // calc score
         calcScore()
-
+        
         eventsTbl.reloadData()
     }
     
@@ -588,9 +550,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func convertToMeter(selected: Int) -> Double {
         var returnVal = 0.0
         
-        let partOne = GlobalVariable.markArray[selected][0]
-        let partTwo = GlobalVariable.markArray[selected][1]
-        let partThree = GlobalVariable.markArray[selected][2]
+        let partOne = athleteEvent.marks[selected][0]
+        let partTwo = athleteEvent.marks[selected][1]
+        let partThree = athleteEvent.marks[selected][2]
         
         if partOne != "" || partTwo != "" || partThree != "" {
             returnVal = Double(partOne + "." + partTwo + partThree)!
@@ -604,9 +566,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func convertToSec(selected: Int) -> Double {
         var returnVal = 0.0
         
-        let partOne = GlobalVariable.markArray[selected][0]
-        let partTwo = GlobalVariable.markArray[selected][1]
-        let partThree = GlobalVariable.markArray[selected][2]
+        let partOne = athleteEvent.marks[selected][0]
+        let partTwo = athleteEvent.marks[selected][1]
+        let partThree = athleteEvent.marks[selected][2]
         
         if partOne != "" {
             returnVal = returnVal + (Double(partOne)! * 60.0)
@@ -633,11 +595,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // get total score and set it as title
     func calcScore() {
         totScore = 0
-        for i in 0...eventsArr.count - 1 {
-            let hold = GlobalVariable.scoreArray[i]
+        for i in 0...athleteEvent.events.count - 1 {
+            let hold = athleteEvent.scores[i]
             totScore = totScore + Int(hold)!
             self.title = "Score - " + String(totScore)
         }
     }
 }
+
 
