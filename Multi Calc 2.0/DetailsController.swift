@@ -38,16 +38,6 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     // set all arrays
     func setArrays() {
-        // put number in mark and score arrays
-        for _ in 0...athleteEvent.events.count - 1 {
-            var holdArr = [String]()
-            holdArr.append("00")
-            holdArr.append("00")
-            holdArr.append("00")
-            athleteEvent.marks.append(holdArr)
-            athleteEvent.scores.append("0000")
-        }
-        
         // put numbers 0 - 99 in for picker components
         for i in 0...99 {
             var number = String(i)
@@ -92,6 +82,8 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         // set arrays picker and table
         setArrays()
+        
+        //athleteEvent.saveEvents(AID: GlobalVariable.eventsIndex)
     }
     
     // each multi has a set of events and these are the sets for each event
@@ -330,6 +322,10 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         // calc score
         calcScore()
+        
+        for i in 0...GlobalVariable.athletesArray.count - 1 {
+            GlobalVariable.athletesArray[i].saveAthlete()
+        }
         
         eventsTbl.reloadData()
     }

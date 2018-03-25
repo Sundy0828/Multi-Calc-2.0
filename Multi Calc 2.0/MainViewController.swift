@@ -13,14 +13,113 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     // avaliable events
     var events = ["Mens Outdoor Dec", "Mens Outdoor Pen", "Mens Indoor Hep", "Mens Indoor Pen", "Womens Outdoor Hep", "Womens Outdoor Dec", "Womens Indoor Pen"]
     var eventType = "Mens Outdoor Dec"
+    let userSettings = UserDefaults.standard
     
     @IBOutlet var pickerView: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         pickerView.delegate = self
         pickerView.dataSource = self
+        if (userSettings.value(forKey: "\(0)") as! Int?) != nil {
+            if (userSettings.value(forKey: "totAthletes") as! Int?) != nil {
+                GlobalVariable.totAthletes = (userSettings.value(forKey: "totAthletes") as! Int?)!
+            }
+            for i in 0...GlobalVariable.totAthletes {
+                var totAthleteEvents = -1
+                if (userSettings.value(forKey: "totAthleteEvents\(i)") as! Int?) != nil {
+                    totAthleteEvents = (userSettings.value(forKey: "totAthleteEvents\(i)") as! Int?)!
+                }
+                GlobalVariable.totEvents.append(totAthleteEvents)
+            }
+            for i in 0...GlobalVariable.totAthletes {
+                if (userSettings.value(forKey: "totAthleteEvents\(i)") as! Int?) != nil {
+                    GlobalVariable.totAthletes = (userSettings.value(forKey: "totAthleteEvents\(i)") as! Int?)!
+                }
+                let athlete: Athlete = fetchAthletes(athleteNum: i, eventNumArr: GlobalVariable.totEvents)
+                GlobalVariable.athletesArray.append(athlete)
+            }
+        }
+        
     }
+    func fetchAthletes(athleteNum: Int, eventNumArr: [Int]) -> Athlete {
+        var id = Int()
+        var name = String()
+        var events = [Event]()
+        if (userSettings.value(forKey: "\(athleteNum)") as! Int?) != nil {
+            id = (userSettings.value(forKey: "\(athleteNum)") as! Int?)!
+        }
+        if (userSettings.value(forKey: "athleteName\(athleteNum)") as! String?) != nil {
+            name = (userSettings.value(forKey: "athleteName\(athleteNum)") as! String?)!
+        }
+        if eventNumArr[athleteNum] != -1 {
+            for j in 0...eventNumArr[athleteNum] {
+                let event = fetchEvents(AID: athleteNum, eventNum: j)
+                events.append(event)
+            }
+        }
+        
+        let athlete = Athlete(id: id, name: name, events: events)
+        return athlete
+    }
+    
+    func fetchEvents(AID: Int, eventNum: Int) -> Event {
+        var id = Int()
+        var name = String()
+        var eventType = String()
+        var events = [String]()
+        var marks = [[String]]()
+        var scores = [String]()
+        
+        
+        
+        if (userSettings.value(forKey: "\(AID)\(eventNum)") as! Int?) != nil {
+            id = (userSettings.value(forKey: "\(AID)\(eventNum)") as! Int?)!
+        }
+        if (userSettings.value(forKey: "\(AID)eventName\(eventNum)") as! String?) != nil {
+            name = (userSettings.value(forKey: "\(AID)eventName\(eventNum)") as! String?)!
+        }
+        if (userSettings.value(forKey: "\(AID)eventType\(eventNum)") as! String?) != nil {
+            eventType = (userSettings.value(forKey: "\(AID)eventType\(eventNum)") as! String?)!
+        }
+        
+        var num = 1
+        if eventType.contains("Dec") {
+            num = 10
+        }else if eventType.contains("Pen") {
+            num = 5
+        }else if eventType.contains("Hep") {
+            num = 7
+        }
+        for i in 0...num - 1 {
+            var mark1 = ""
+            var mark2 = ""
+            var mark3 = ""
+            
+            if (userSettings.value(forKey: "\(AID)\(i)0marks\(eventNum)") as! String?) != nil {
+                mark1 = (userSettings.value(forKey: "\(AID)\(i)0marks\(eventNum)") as! String?)!
+            }
+            if (userSettings.value(forKey: "\(AID)\(i)1marks\(eventNum)") as! String?) != nil {
+                mark2 = (userSettings.value(forKey: "\(AID)\(i)1marks\(eventNum)") as! String?)!
+            }
+            if (userSettings.value(forKey: "\(AID)\(i)2marks\(eventNum)") as! String?) != nil {
+                mark3 = (userSettings.value(forKey: "\(AID)\(i)2marks\(eventNum)") as! String?)!
+            }
+            marks.append([mark1, mark2, mark3])
+        }
+        for i in 0...num - 1 {
+            if (userSettings.value(forKey: "\(AID)\(i)scores\(eventNum)") as! String?) != nil {
+                let score: String = (userSettings.value(forKey: "\(AID)\(i)scores\(eventNum)") as! String?)!
+                scores.append(score)
+            }
+        }
+        let event = Event(id: id, name: name, eventType: eventType, events: events, marks: marks, scores: scores)
+        return event
+    }
+
     
     @IBAction func calcScorePressed(_ sender: Any) {
         if GlobalVariable.eventType != eventType {

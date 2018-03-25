@@ -15,6 +15,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     var selectedItem = 0
     var eventType = "Mens Outdoor Dec"
     let userSettings = UserDefaults.standard
+    var sex = ""
     
     // outlets
     @IBOutlet var eventName: UITextField!
@@ -47,14 +48,68 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
-            let event = Event(name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
+            let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
+            let event = Event(id: id, name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
+            let athleteEvent = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[id]
+            athleteEvent.events = setEventsArray(eventSelected: athleteEvent.eventType)
+            // put number in mark and score arrays
+            for _ in 0...athleteEvent.events.count - 1 {
+                var holdArr = [String]()
+                holdArr.append("00")
+                holdArr.append("00")
+                holdArr.append("00")
+                athleteEvent.marks.append(holdArr)
+                athleteEvent.scores.append("0000")
+            }
+            for i in 0...GlobalVariable.athletesArray.count - 1 {
+                GlobalVariable.athletesArray[i].saveAthlete()
+            }
+            //event.saveEvents(AID: GlobalVariable.athletesIndex)
             eventName.text = ""
-            selectedItem = -1
+            eventType = "Mens Outdoor Dec"
+            selectedItem = 0
             eventTbl.reloadData()
         }else {
             alert(message: "Make sure an event is selected and a name is given!")
         }
+    }
+    // each multi has a set of events and these are the sets for each event
+    func setEventsArray(eventSelected : String) -> [String] {
+        var test = [String]()
+        switch (eventSelected) {
+        case "Mens Outdoor Dec" :
+            test = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
+            sex = "men"
+            break;
+        case "Mens Outdoor Pen" :
+            test = ["LJ", "JT", "200", "DT", "1500"]
+            sex = "men"
+            break;
+        case "Mens Indoor Hep" :
+            test = ["60", "LJ", "SP", "HJ", "60H", "PV", "1000"]
+            sex = "men"
+            break;
+        case "Mens Indoor Pen" :
+            test = ["60H", "LJ", "SP", "HJ", "1000"]
+            sex = "men"
+            break;
+        case "Womens Outdoor Hep" :
+            test = ["100H", "HJ", "SP", "200", "LJ", "JT", "800"]
+            sex = "women"
+            break;
+        case "Womens Outdoor Dec" :
+            test = ["100", "DT", "PV", "JT", "400", "100H", "LJ", "SP", "HJ", "1500"]
+            sex = "women"
+            break;
+        case "Womens Indoor Pen" :
+            test = ["60H", "HJ", "SP", "LJ", "800"]
+            sex = "women"
+            break;
+        default:
+            test = [String]()
+        }
+        return test
     }
     // hide keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

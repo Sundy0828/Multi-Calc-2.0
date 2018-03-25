@@ -22,6 +22,9 @@ struct GlobalVariable{
     static var keyAthletes = "athletesArray"
     static var eventsIndex = -1
     static var eventType = ""
+    static var totAthletes = 0
+    static var totEvents = [Int]()
+    static var totAthleteEvents = 0
 }
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
