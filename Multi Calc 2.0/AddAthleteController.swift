@@ -46,9 +46,11 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
         if athleteName.text != "" {
             // add values to athlete array and set textfield to ""
             let name = athleteName.text!
+            // set athlete and add it to the array
             let athlete: Athlete = Athlete(name: name, events: [Event]())
             GlobalVariable.athletesArray.append(athlete)
             userSettings.set(GlobalVariable.athletesArray.count - 1, forKey: "totAthletes")
+            // save athletes
             for i in 0...GlobalVariable.athletesArray.count - 1 {
                 GlobalVariable.athletesArray[i].saveAthlete(id: i)
             }

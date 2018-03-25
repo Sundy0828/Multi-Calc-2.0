@@ -57,8 +57,10 @@ class EventListController: UITableViewController {
                 for i in 0...GlobalVariable.athletesArray.count - 1 {
                     GlobalVariable.athletesArray[i].deleteAthlete(id: i)
                 }
+                // remove from table and array
                 GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                // save athletes and tot number of athletes
                 UserDefaults.standard.set(GlobalVariable.athletesArray.count - 1, forKey: "totAthletes")
                 for i in 0...GlobalVariable.athletesArray.count - 1 {
                     GlobalVariable.athletesArray[i].saveAthlete(id: i)

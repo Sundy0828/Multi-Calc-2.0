@@ -48,9 +48,11 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
+            // get tot number of events for athlete
             let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
             let event = Event(name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
+            // set athlete event to specific event
             let athleteEvent = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[id]
             athleteEvent.events = setEventsArray(eventSelected: athleteEvent.eventType)
             // put number in mark and score arrays
@@ -62,6 +64,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
                 athleteEvent.marks.append(holdArr)
                 athleteEvent.scores.append("0000")
             }
+            // save athletes
             for i in 0...GlobalVariable.athletesArray.count - 1 {
                 GlobalVariable.athletesArray[i].saveAthlete(id: i)
             }

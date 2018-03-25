@@ -324,8 +324,9 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         // calc score
         calcScore()
         
+        // save athletes
         for i in 0...GlobalVariable.athletesArray.count - 1 {
-            GlobalVariable.athletesArray[i].saveAthlete()
+            GlobalVariable.athletesArray[i].saveAthlete(id: i)
         }
         
         eventsTbl.reloadData()
