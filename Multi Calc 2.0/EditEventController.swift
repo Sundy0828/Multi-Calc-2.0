@@ -28,6 +28,12 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
             tabController.navigationItem.title = "Add Event"
         }
     }
+    // make text limit 25
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        return newLength <= 25
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,10 +52,14 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
-        // set event name and event type in array
-        GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].name = eventName.text!
-        GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].eventType = eventType
-        self.navigationController?.popViewController(animated: true)
+            // set event name and event type in array
+            GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].name = eventName.text!
+            GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].eventType = eventType
+            // save athletes
+            for i in 0...GlobalVariable.athletesArray.count - 1 {
+                GlobalVariable.athletesArray[i].saveAthlete(id: i)
+            }
+            self.navigationController?.popViewController(animated: true)
         }else {
             alert(message: "Make sure an event is selected and a name is given!")
         }

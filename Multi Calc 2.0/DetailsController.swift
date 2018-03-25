@@ -83,7 +83,8 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         // set arrays picker and table
         setArrays()
         
-        //athleteEvent.saveEvents(AID: GlobalVariable.eventsIndex)
+        // calc score
+        calcScore()
     }
     
     // each multi has a set of events and these are the sets for each event

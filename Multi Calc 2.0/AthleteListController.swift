@@ -54,8 +54,15 @@ class AthleteListController: UITableViewController {
             
             // Create OK button with action handler
             let ok = UIAlertAction(title: "Yes", style: .default, handler: { (action) -> Void in
+                for i in 0...GlobalVariable.athletesArray.count - 1 {
+                    GlobalVariable.athletesArray[i].deleteAthlete(id: i)
+                }
                 GlobalVariable.athletesArray.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                UserDefaults.standard.set(GlobalVariable.athletesArray.count - 1, forKey: "totAthletes")
+                for i in 0...GlobalVariable.athletesArray.count - 1 {
+                    GlobalVariable.athletesArray[i].saveAthlete(id: i)
+                }
                 completion(true)
             })
             

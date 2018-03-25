@@ -36,15 +36,21 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    // make text limit 25
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        return newLength <= 25
+    }
     @IBAction func addAthletePressed(_ sender: Any) {
         if athleteName.text != "" {
             // add values to athlete array and set textfield to ""
             let name = athleteName.text!
-            let athlete: Athlete = Athlete(id: GlobalVariable.athletesArray.count, name: name, events: [Event]())
+            let athlete: Athlete = Athlete(name: name, events: [Event]())
             GlobalVariable.athletesArray.append(athlete)
             userSettings.set(GlobalVariable.athletesArray.count - 1, forKey: "totAthletes")
             for i in 0...GlobalVariable.athletesArray.count - 1 {
-                GlobalVariable.athletesArray[i].saveAthlete()
+                GlobalVariable.athletesArray[i].saveAthlete(id: i)
             }
             //athlete.saveAthlete()
             athleteName.text = ""

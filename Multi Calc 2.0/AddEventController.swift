@@ -49,7 +49,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
             let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
-            let event = Event(id: id, name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
+            let event = Event(name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
             let athleteEvent = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[id]
             athleteEvent.events = setEventsArray(eventSelected: athleteEvent.eventType)
@@ -63,13 +63,13 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
                 athleteEvent.scores.append("0000")
             }
             for i in 0...GlobalVariable.athletesArray.count - 1 {
-                GlobalVariable.athletesArray[i].saveAthlete()
+                GlobalVariable.athletesArray[i].saveAthlete(id: i)
             }
             //event.saveEvents(AID: GlobalVariable.athletesIndex)
             eventName.text = ""
-            eventType = "Mens Outdoor Dec"
-            selectedItem = 0
+            tabBarController!.selectedIndex = 0
             eventTbl.reloadData()
+            
         }else {
             alert(message: "Make sure an event is selected and a name is given!")
         }
@@ -115,6 +115,12 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    // make text limit 25
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        return newLength <= 25
     }
     // set table length
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

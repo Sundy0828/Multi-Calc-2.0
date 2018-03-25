@@ -24,10 +24,13 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         pickerView.delegate = self
         pickerView.dataSource = self
+        // if there is a first user then get saved data
         if (userSettings.value(forKey: "\(0)") as! Int?) != nil {
+            // get total number of athlete
             if (userSettings.value(forKey: "totAthletes") as! Int?) != nil {
                 GlobalVariable.totAthletes = (userSettings.value(forKey: "totAthletes") as! Int?)!
             }
+            // based on number of athletes get the number of events per athlete and add to tot event array
             for i in 0...GlobalVariable.totAthletes {
                 var totAthleteEvents = -1
                 if (userSettings.value(forKey: "totAthleteEvents\(i)") as! Int?) != nil {
@@ -35,6 +38,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 }
                 GlobalVariable.totEvents.append(totAthleteEvents)
             }
+            // set athletes array from saved data
             for i in 0...GlobalVariable.totAthletes {
                 if (userSettings.value(forKey: "totAthleteEvents\(i)") as! Int?) != nil {
                     GlobalVariable.totAthletes = (userSettings.value(forKey: "totAthleteEvents\(i)") as! Int?)!
@@ -45,13 +49,10 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
         
     }
+    // get data for all athletes
     func fetchAthletes(athleteNum: Int, eventNumArr: [Int]) -> Athlete {
-        var id = Int()
         var name = String()
         var events = [Event]()
-        if (userSettings.value(forKey: "\(athleteNum)") as! Int?) != nil {
-            id = (userSettings.value(forKey: "\(athleteNum)") as! Int?)!
-        }
         if (userSettings.value(forKey: "athleteName\(athleteNum)") as! String?) != nil {
             name = (userSettings.value(forKey: "athleteName\(athleteNum)") as! String?)!
         }
@@ -62,23 +63,16 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             }
         }
         
-        let athlete = Athlete(id: id, name: name, events: events)
+        let athlete = Athlete(name: name, events: events)
         return athlete
     }
     
     func fetchEvents(AID: Int, eventNum: Int) -> Event {
-        var id = Int()
         var name = String()
         var eventType = String()
-        var events = [String]()
         var marks = [[String]]()
         var scores = [String]()
         
-        
-        
-        if (userSettings.value(forKey: "\(AID)\(eventNum)") as! Int?) != nil {
-            id = (userSettings.value(forKey: "\(AID)\(eventNum)") as! Int?)!
-        }
         if (userSettings.value(forKey: "\(AID)eventName\(eventNum)") as! String?) != nil {
             name = (userSettings.value(forKey: "\(AID)eventName\(eventNum)") as! String?)!
         }
@@ -116,7 +110,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 scores.append(score)
             }
         }
-        let event = Event(id: id, name: name, eventType: eventType, events: events, marks: marks, scores: scores)
+        let event = Event(name: name, eventType: eventType, events: events, marks: marks, scores: scores)
         return event
     }
 

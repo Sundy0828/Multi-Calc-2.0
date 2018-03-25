@@ -20,10 +20,20 @@ class EditAthleteController: UIViewController, UITextFieldDelegate {
         // set text to whatever the name is
         athleteName.text = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].name
     }
+    // make text limit 25
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        return newLength <= 25
+    }
     // set changes in array
     @IBAction func donePressed(_ sender: Any) {
         if athleteName.text != "" {
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].name = athleteName.text!
+            // save athletes
+            for i in 0...GlobalVariable.athletesArray.count - 1 {
+                GlobalVariable.athletesArray[i].saveAthlete(id: i)
+            }
             self.navigationController?.popViewController(animated: true)
         }else {
             alert(message: "Make sure name is given!")
