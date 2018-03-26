@@ -52,13 +52,14 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
+            let athleteIndex = GlobalVariable.athletesArray.count - 1
             // set event name and event type in array
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].name = eventName.text!
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].eventType = eventType
-            // save athletes
-            for i in 0...GlobalVariable.athletesArray.count - 1 {
-                GlobalVariable.athletesArray[i].saveAthlete(id: i)
-            }
+            // save athlete edited
+            
+            GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            
             self.navigationController?.popViewController(animated: true)
         }else {
             alert(message: "Make sure an event is selected and a name is given!")
@@ -117,7 +118,7 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
         //calls alert controller with tital and message
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         //creates and adds ok button
-        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(OKAction)
         //shows
         self.present(alertController, animated: true, completion: nil)

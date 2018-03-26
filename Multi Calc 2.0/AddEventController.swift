@@ -48,6 +48,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
+            let athleteIndex = GlobalVariable.athletesArray.count - 1
             let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
             let event = Event(name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
@@ -62,9 +63,9 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
                 athleteEvent.marks.append(holdArr)
                 athleteEvent.scores.append("0000")
             }
-            for i in 0...GlobalVariable.athletesArray.count - 1 {
-                GlobalVariable.athletesArray[i].saveAthlete(id: i)
-            }
+            // only save once for this specific event/athlete
+            GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            
             //event.saveEvents(AID: GlobalVariable.athletesIndex)
             eventName.text = ""
             tabBarController!.selectedIndex = 0
@@ -169,7 +170,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         //calls alert controller with tital and message
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         //creates and adds ok button
-        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(OKAction)
         //shows
         self.present(alertController, animated: true, completion: nil)
