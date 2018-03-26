@@ -47,11 +47,13 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
             // add values to athlete array and set textfield to ""
             let name = athleteName.text!
             let athlete: Athlete = Athlete(name: name, events: [Event]())
+            let athleteIndex = GlobalVariable.athletesArray.count - 1
             GlobalVariable.athletesArray.append(athlete)
-            userSettings.set(GlobalVariable.athletesArray.count - 1, forKey: "totAthletes")
-            for i in 0...GlobalVariable.athletesArray.count - 1 {
-                GlobalVariable.athletesArray[i].saveAthlete(id: i)
-            }
+            userSettings.set(athleteIndex, forKey: "totAthletes")
+            
+            // save only the athlete we're on, do not resave the entire array
+            GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            
             //athlete.saveAthlete()
             athleteName.text = ""
         }else {
@@ -63,7 +65,7 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
         //calls alert controller with tital and message
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         //creates and adds ok button
-        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(OKAction)
         //shows
         self.present(alertController, animated: true, completion: nil)
