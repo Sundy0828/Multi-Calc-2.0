@@ -97,7 +97,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             pickerDistOne.append(number)
             
         }
-        
     }
     
     override func viewDidLoad() {

@@ -39,7 +39,7 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
     // set all arrays
     func setArrays() {
         // put numbers 0 - 99 in for picker components
-        for i in 0...99 {
+        for i in 0...149 {
             var number = String(i)
             if i < 10 {
                 pickerDistTwo.append(number)
@@ -52,11 +52,15 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
                 pickerTimeTwo.append(number)
             }
             // final decimal and first values for each picker go to 99
-            pickerTimeOne.append(number)
+            if i < 100 {
+                pickerTimeOne.append(number)
+                pickerTimeThree.append(number)
+            }
+            
+            // go the rest of the way (specifically for JT but also all distances)
             pickerDistOne.append(number)
-            pickerTimeThree.append(number)
+            
         }
-        
     }
     
     override func viewDidLoad() {
