@@ -172,7 +172,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         //calls alert controller with tital and message
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         //creates and adds ok button
-        let OKAction = UIAlertAction(title: "Yes", style: .default, handler: nil)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(OKAction)
         //shows
         self.present(alertController, animated: true, completion: nil)
