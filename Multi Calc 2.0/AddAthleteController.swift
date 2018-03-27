@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class AddAthleteController: UIViewController, UITextFieldDelegate {
     @IBOutlet var athleteName: UITextField!
@@ -48,7 +49,7 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
             let name = athleteName.text!
             // set athlete and add it to the array
             let athlete: Athlete = Athlete(name: name, events: [Event]())
-            let athleteIndex = GlobalVariable.athletesArray.count - 1
+            let athleteIndex = GlobalVariable.athletesArray.count
             GlobalVariable.athletesArray.append(athlete)
             userSettings.set(athleteIndex, forKey: "totAthletes")
             
@@ -57,6 +58,13 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
             
             //athlete.saveAthlete()
             athleteName.text = ""
+            // show notification that athlete was added
+            timedNotifications(inSeconds: 0.1, name: name) { (success) in
+                if success {
+                    print("Successfully Notified")
+                }
+            }
+            
         }else {
             alert(message: "Make sure name is given!")
         }
@@ -70,5 +78,26 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
         alertController.addAction(OKAction)
         //shows
         self.present(alertController, animated: true, completion: nil)
+    }
+    // athlete notification function
+    func timedNotifications(inSeconds: TimeInterval, name: String, completion: @escaping (_ Success: Bool) -> ()) {
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
+        
+        let content = UNMutableNotificationContent()
+        
+        content.title = "Athlete Added"
+        //content.subtitle = "Yo whats up i am subtitle"
+        content.body = "\(name) was added to the athlete list!"
+        
+        let request = UNNotificationRequest(identifier: "customNotification", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if error != nil {
+                completion(false)
+            }else {
+                completion(true)
+            }
+        }
     }
 }

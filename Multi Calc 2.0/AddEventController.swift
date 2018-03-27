@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class AddEventController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
@@ -67,6 +68,13 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
             // only save once for this specific event/athlete
             GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
             
+            // show notification that event was added
+            timedNotifications(inSeconds: 0.1, name: eventName.text!, eventType: eventType) { (success) in
+                if success {
+                    print("Successfully Notified")
+                }
+            }
+            
             //event.saveEvents(AID: GlobalVariable.athletesIndex)
             eventName.text = ""
             tabBarController!.selectedIndex = 0
@@ -78,40 +86,40 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     // each multi has a set of events and these are the sets for each event
     func setEventsArray(eventSelected : String) -> [String] {
-        var test = [String]()
+        var eventTypeEvents = [String]()
         switch (eventSelected) {
         case "Mens Outdoor Dec" :
-            test = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
+            eventTypeEvents = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
             sex = "men"
             break;
         case "Mens Outdoor Pen" :
-            test = ["LJ", "JT", "200", "DT", "1500"]
+            eventTypeEvents = ["LJ", "JT", "200", "DT", "1500"]
             sex = "men"
             break;
         case "Mens Indoor Hep" :
-            test = ["60", "LJ", "SP", "HJ", "60H", "PV", "1000"]
+            eventTypeEvents = ["60", "LJ", "SP", "HJ", "60H", "PV", "1000"]
             sex = "men"
             break;
         case "Mens Indoor Pen" :
-            test = ["60H", "LJ", "SP", "HJ", "1000"]
+            eventTypeEvents = ["60H", "LJ", "SP", "HJ", "1000"]
             sex = "men"
             break;
         case "Womens Outdoor Hep" :
-            test = ["100H", "HJ", "SP", "200", "LJ", "JT", "800"]
+            eventTypeEvents = ["100H", "HJ", "SP", "200", "LJ", "JT", "800"]
             sex = "women"
             break;
         case "Womens Outdoor Dec" :
-            test = ["100", "DT", "PV", "JT", "400", "100H", "LJ", "SP", "HJ", "1500"]
+            eventTypeEvents = ["100", "DT", "PV", "JT", "400", "100H", "LJ", "SP", "HJ", "1500"]
             sex = "women"
             break;
         case "Womens Indoor Pen" :
-            test = ["60H", "HJ", "SP", "LJ", "800"]
+            eventTypeEvents = ["60H", "HJ", "SP", "LJ", "800"]
             sex = "women"
             break;
         default:
-            test = [String]()
+            eventTypeEvents = [String]()
         }
-        return test
+        return eventTypeEvents
     }
     // hide keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -175,5 +183,26 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         alertController.addAction(OKAction)
         //shows
         self.present(alertController, animated: true, completion: nil)
+    }
+    // event notification function
+    func timedNotifications(inSeconds: TimeInterval, name: String, eventType: String, completion: @escaping (_ Success: Bool) -> ()) {
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
+        
+        let content = UNMutableNotificationContent()
+        
+        content.title = "Event Added"
+        //content.subtitle = "Yo whats up i am subtitle"
+        content.body = "\(name) was added with \(eventType) to the event list!"
+        
+        let request = UNNotificationRequest(identifier: "customNotification", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if error != nil {
+                completion(false)
+            }else {
+                completion(true)
+            }
+        }
     }
 }
