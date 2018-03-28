@@ -60,7 +60,10 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
                 athleteEvent.scores.append("0000")
             }
             // only save once for this specific event/athlete
-            GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            //GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            for i in 0...GlobalVariable.athletesArray.count - 1 {
+                GlobalVariable.athletesArray[i].saveAthlete(id: i)
+            }
             
             // show notification that event was added
             timedNotifications(inSeconds: 0.1, name: eventName.text!, eventType: eventType) { (success) in

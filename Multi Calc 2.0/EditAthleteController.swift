@@ -34,9 +34,12 @@ class EditAthleteController: UIViewController, UITextFieldDelegate {
             let athleteIndex = GlobalVariable.athletesArray.count - 1
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].fName = athleteName.text!
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].lName = athleteLastName.text!
-            // save athlete edited
             
-            GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            // save athlete edited
+            //GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            for i in 0...GlobalVariable.athletesArray.count - 1 {
+                GlobalVariable.athletesArray[i].saveAthlete(id: i)
+            }
             
             self.navigationController?.popViewController(animated: true)
         }else {

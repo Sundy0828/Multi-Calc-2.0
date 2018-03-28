@@ -52,7 +52,10 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
             userSettings.set(athleteIndex, forKey: "totAthletes")
             
             // save only the athlete we're on, do not resave the entire array
-            GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            //GlobalVariable.athletesArray[athleteIndex].saveAthlete(id: athleteIndex)
+            for i in 0...GlobalVariable.athletesArray.count - 1 {
+                GlobalVariable.athletesArray[i].saveAthlete(id: i)
+            }
             
             //athlete.saveAthlete()
             athleteName.text = ""
