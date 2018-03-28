@@ -11,7 +11,6 @@ import UIKit
 class TrackSizeController: UIViewController {
     
     // buttons in custom segmented control
-    @IBOutlet var stackBtnVal1: UIButton!
     @IBOutlet var stackBtnVal2: UIButton!
     @IBOutlet var stackBtnVal3: UIButton!
     @IBOutlet var stackBtnVal4: UIButton!
@@ -54,7 +53,6 @@ class TrackSizeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // add buttons to array so they dont change positions
-        stackBtnVal.append(stackBtnVal1)
         stackBtnVal.append(stackBtnVal2)
         stackBtnVal.append(stackBtnVal3)
         stackBtnVal.append(stackBtnVal4)
@@ -64,10 +62,10 @@ class TrackSizeController: UIViewController {
         styleBtnBlue(btn: stepperPlus, heightT: 30)
         styleBtnBlue(btn: stepperMinus, heightT: 30)
         
-        for i in 0...3 {
+        for i in 0...stackBtnVal.count - 1 {
             styleBtnWhite(btn: stackBtnVal[i], heightT: 17)
         }
-        styleBtnBlue(btn: stackBtnVal[4], heightT: 17)
+        styleBtnBlue(btn: stackBtnVal[stackBtnVal.count - 1], heightT: 17)
         
         // style segmented control
         let stackBtnHeight = 50/667*width
@@ -90,7 +88,7 @@ class TrackSizeController: UIViewController {
         distStepper = Double(sender.currentTitle!)!
         stepperMinus.setTitle("- \(distStepper)m", for: UIControlState.normal)
         stepperPlus.setTitle("+ \(distStepper)m", for: UIControlState.normal)
-        for i in 0...4 {
+        for i in 0...stackBtnVal.count - 1 {
             if sender.tag == i {
                 styleBtnBlue(btn: stackBtnVal[i], heightT: 17)
             }else {
@@ -161,7 +159,7 @@ class TrackSizeController: UIViewController {
         // use color blue and round corners
         btn.layer.backgroundColor = btnColor
         if heightT > 17 {
-            btn.layer.cornerRadius = 50/667*height/2
+            btn.layer.cornerRadius = 50/2
         }
         btn.setTitleColor(.black, for: .normal)
         
@@ -179,7 +177,7 @@ class TrackSizeController: UIViewController {
         // use color blue and round corners
         btn.layer.backgroundColor = btnColor
         if heightT > 17 {
-            btn.layer.cornerRadius = 50/667*height/2
+            btn.layer.cornerRadius = 50/2
         }
         btn.setTitleColor(.black, for: .normal)
     }

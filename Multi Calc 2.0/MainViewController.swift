@@ -148,4 +148,16 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         eventType = events[row]
     }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont(name: "AvenirNext-Regular", size: 30)
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = events[row]
+        pickerLabel?.textColor = UIColor.black
+        
+        return pickerLabel!
+    }
 }
