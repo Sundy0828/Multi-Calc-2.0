@@ -15,9 +15,7 @@ class EventListController: UITableViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
         // set title
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Events"
-        }
+        self.title = "\(athleteEvents.fName)'s Events"
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,10 +23,6 @@ class EventListController: UITableViewController {
         // set table view and title
         tableView.delegate = self
         tableView.dataSource = self
-        
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Events"
-        }
     }
     // swipe guestures for table view
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

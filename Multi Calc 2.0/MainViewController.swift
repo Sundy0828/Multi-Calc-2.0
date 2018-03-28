@@ -61,10 +61,14 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     // get data for all athletes
     func fetchAthletes(athleteNum: Int, eventNumArr: [Int]) -> Athlete {
-        var name = String()
+        var fName = String()
+        var lName = String()
         var events = [Event]()
-        if (userSettings.value(forKey: "athleteName\(athleteNum)") as! String?) != nil {
-            name = (userSettings.value(forKey: "athleteName\(athleteNum)") as! String?)!
+        if (userSettings.value(forKey: "athleteFirstName\(athleteNum)") as! String?) != nil {
+            fName = (userSettings.value(forKey: "athleteFirstName\(athleteNum)") as! String?)!
+        }
+        if (userSettings.value(forKey: "athleteLastName\(athleteNum)") as! String?) != nil {
+            lName = (userSettings.value(forKey: "athleteLastName\(athleteNum)") as! String?)!
         }
         if eventNumArr[athleteNum] != -1 {
             for j in 0...eventNumArr[athleteNum] {
@@ -73,7 +77,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             }
         }
         
-        let athlete = Athlete(name: name, events: events)
+        let athlete = Athlete(fName: fName, lName: lName, events: events)
         return athlete
     }
     
@@ -120,7 +124,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 scores.append(score)
             }
         }
-        let event = Event(name: name, eventType: eventType, events: events, marks: marks, scores: scores)
+        let event = Event(name: name, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, events: events, marks: marks, scores: scores)
         return event
     }
 

@@ -11,6 +11,7 @@ import UserNotifications
 
 class AddAthleteController: UIViewController, UITextFieldDelegate {
     @IBOutlet var athleteName: UITextField!
+    @IBOutlet var athleteLastName: UITextField!
     
     let userSettings = UserDefaults.standard
     
@@ -19,18 +20,14 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
         // hide keyboard and change title
         self.hideKeyboardWhenTappedAround()
         self.athleteName.delegate = self
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Add Athlete"
-        }
+        self.athleteLastName.delegate = self
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         // hide keyboard and change title
         self.hideKeyboardWhenTappedAround()
         self.athleteName.delegate = self
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Add Athlete"
-        }
+        self.athleteLastName.delegate = self
     }
     // hide keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -41,14 +38,15 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count - range.length
-        return newLength <= 25
+        return newLength <= 12
     }
     @IBAction func addAthletePressed(_ sender: Any) {
         if athleteName.text != "" {
             // add values to athlete array and set textfield to ""
-            let name = athleteName.text!
+            let firstName = athleteName.text!
+            let lastName = athleteLastName.text!
             // set athlete and add it to the array
-            let athlete: Athlete = Athlete(name: name, events: [Event]())
+            let athlete: Athlete = Athlete(fName: firstName, lName: lastName, events: [Event]())
             let athleteIndex = GlobalVariable.athletesArray.count
             GlobalVariable.athletesArray.append(athlete)
             userSettings.set(athleteIndex, forKey: "totAthletes")
@@ -58,15 +56,16 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
             
             //athlete.saveAthlete()
             athleteName.text = ""
+            athleteLastName.text = ""
             // show notification that athlete was added
-            timedNotifications(inSeconds: 0.1, name: name) { (success) in
+            timedNotifications(inSeconds: 0.1, name: firstName) { (success) in
                 if success {
                     print("Successfully Notified")
                 }
             }
             
         }else {
-            alert(message: "Make sure name is given!")
+            alert(message: "Make sure at least a first name is given!")
         }
     }
     // alert function

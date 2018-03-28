@@ -14,9 +14,7 @@ class AthleteListController: UITableViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
         // set title
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Athletes"
-        }
+        self.title = "Athletes"
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +22,6 @@ class AthleteListController: UITableViewController {
         // set table and title
         tableView.delegate = self
         tableView.dataSource = self
-        
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Athletes"
-        }
     }
     
     // swipe guestures for table view
@@ -95,7 +89,7 @@ class AthleteListController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "athleteListCell")
         
         // put in name and array
-        cell?.textLabel?.text = GlobalVariable.athletesArray[indexPath.row].name
+        cell?.textLabel?.text = GlobalVariable.athletesArray[indexPath.row].fullName()
         let image = UIImageView(image: #imageLiteral(resourceName: "blackArrow"))
         image.bounds.size.height = 49
         image.bounds.size.width = 49

@@ -27,9 +27,6 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         // hide keyboard and set title
         self.hideKeyboardWhenTappedAround()
         self.eventName.delegate = self
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Add Event"
-        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,16 +39,13 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // hide keyboard and set title
         self.hideKeyboardWhenTappedAround()
-        if let tabController = self.parent as? UITabBarController {
-            tabController.navigationItem.title = "Add Event"
-        }
     }
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
             let athleteIndex = GlobalVariable.athletesArray.count - 1
             let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
-            let event = Event(name: eventName.text!, eventType: eventType, events: [String](), marks: [[String]](), scores: [String]())
+            let event = Event(name: eventName.text!, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, events: [String](), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
             // set athlete event to specific event
             let athleteEvent = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[id]
@@ -77,7 +71,6 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
             
             //event.saveEvents(AID: GlobalVariable.athletesIndex)
             eventName.text = ""
-            tabBarController!.selectedIndex = 0
             eventTbl.reloadData()
             
         }else {
