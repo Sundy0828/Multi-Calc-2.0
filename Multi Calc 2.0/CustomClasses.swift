@@ -27,58 +27,6 @@ class Event {
         self.marks = marks
         self.scores = scores
     }
-    // convert distance
-    func convertDistance(mark: [String]) -> [String] {
-        var hold = 0.0
-        if GlobalVariable.measure != metric {
-            if self.metric {
-                hold = convertToMeter(mark: mark)
-            }else {
-                hold = convertToFeet(mark: mark)
-            }
-        }
-        metric = !metric
-        
-        let one = hold
-        let two = (hold - Double(one)) * 10
-        let three = (two - Double(Int(two))) * 10
-        
-        return [String(Int(one)), String(Int(two)), String(Int(three))]
-    }
-    // convert to feet
-    func convertToFeet(mark: [String]) -> Double {
-        var returnVal = 0.0
-        let convertFeet = 3.280839895
-        
-        let partOne = mark[0]
-        let partTwo = mark[1]
-        let partThree = mark[2]
-        
-        if partOne != "" || partTwo != "" || partThree != "" {
-            returnVal = Double(partOne + "." + partTwo + partThree)!
-        }
-        if !GlobalVariable.measure {
-            returnVal = returnVal * convertFeet
-        }
-        return returnVal
-    }
-    // convert to meter
-    func convertToMeter(mark: [String]) -> Double {
-        var returnVal = 0.0
-        let convertFeet = 3.280839895
-        
-        let partOne = mark[0]
-        let partTwo = mark[1]
-        let partThree = mark[2]
-        
-        if partOne != "" || partTwo != "" || partThree != "" {
-            returnVal = Double(partOne + "." + partTwo + partThree)!
-        }
-        if !GlobalVariable.measure {
-            returnVal = returnVal / convertFeet
-        }
-        return returnVal
-    }
     
     // save all events for athlete to NSUserDefaults
     func saveEvents(AID: Int, id: Int) {
@@ -86,6 +34,8 @@ class Event {
         userSettings.set(id, forKey: "\(AID)\(id)")
         userSettings.set(name, forKey: "\(AID)eventName\(id)")
         userSettings.set(eventType, forKey: "\(AID)eventType\(id)")
+        userSettings.set(fat, forKey: "\(AID)fat\(id)")
+        userSettings.set(metric, forKey: "\(AID)metric\(id)")
         var num = 1
         if eventType.contains("Dec") {
             num = 10
@@ -93,6 +43,11 @@ class Event {
             num = 5
         }else if eventType.contains("Hep") {
             num = 7
+        }
+        if !events.isEmpty {
+            for i in 0...num - 1 {
+                userSettings.set(events[i], forKey: "\(AID)\(i)events\(id)")
+            }
         }
         if !marks.isEmpty {
             for i in 0...num - 1 {

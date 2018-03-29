@@ -136,6 +136,7 @@ class SettingsController: UITableViewController {
         }
         style()
     }
+    
     // alert function
     func alert(message: String, title: String = "Error") {
         //calls alert controller with tital and message

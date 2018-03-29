@@ -15,6 +15,11 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     var events = ["Mens Outdoor Dec", "Mens Outdoor Pen", "Mens Indoor Hep", "Mens Indoor Pen", "Womens Outdoor Hep", "Womens Outdoor Dec", "Womens Indoor Pen"]
     var eventType = "Mens Outdoor Dec"
     let userSettings = UserDefaults.standard
+    // save key names
+    let keyAuto = "distChoice"
+    let keyMeasure = "paceDistChoice"
+    let keyTheme = "theme"
+    let keyLapDist = "lapDist"
     
     @IBOutlet var pickerView: UIPickerView!
     
@@ -30,10 +35,26 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             }
         }
         
-        
-        
         pickerView.delegate = self
         pickerView.dataSource = self
+        
+        // set varables if values were saved
+        if (userSettings.value(forKey: keyAuto) as! Bool?) != nil {
+            GlobalVariable.auto = (userSettings.value(forKey: keyAuto) as! Bool?)!
+        }
+        if (userSettings.value(forKey: keyMeasure) as! Bool?) != nil {
+            GlobalVariable.measure = (userSettings.value(forKey: keyMeasure) as! Bool?)!
+        }
+        if (userSettings.value(forKey: keyTheme) as! String?) != nil {
+            GlobalVariable.theme = (userSettings.value(forKey: keyTheme) as! String?)!
+        }
+        if (userSettings.value(forKey: keyLapDist) as! Double?) != nil {
+            GlobalVariable.distStepperVal = (userSettings.value(forKey: keyLapDist) as! Double?)!
+        }
+        if (userSettings.value(forKey: GlobalVariable.keyAthletes) as! [Athlete]?) != nil {
+            GlobalVariable.athletesArray = (userSettings.value(forKey: GlobalVariable.keyAthletes) as! [Athlete]?)!
+        }
+        
         // if there is a first user then get saved data
         if (userSettings.value(forKey: "\(0)") as! Int?) != nil {
             // get total number of athlete
@@ -84,6 +105,9 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     func fetchEvents(AID: Int, eventNum: Int) -> Event {
         var name = String()
         var eventType = String()
+        var fat = Bool()
+        var metric = Bool()
+        var events = [String]()
         var marks = [[String]]()
         var scores = [String]()
         
@@ -93,6 +117,12 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         if (userSettings.value(forKey: "\(AID)eventType\(eventNum)") as! String?) != nil {
             eventType = (userSettings.value(forKey: "\(AID)eventType\(eventNum)") as! String?)!
         }
+        if (userSettings.value(forKey: "\(AID)fat\(eventNum)") as! Bool?) != nil {
+            fat = (userSettings.value(forKey: "\(AID)fat\(eventNum)") as! Bool?)!
+        }
+        if (userSettings.value(forKey: "\(AID)metric\(eventNum)") as! Bool?) != nil {
+            metric = (userSettings.value(forKey: "\(AID)metric\(eventNum)") as! Bool?)!
+        }
         
         var num = 1
         if eventType.contains("Dec") {
@@ -101,6 +131,12 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             num = 5
         }else if eventType.contains("Hep") {
             num = 7
+        }
+        for i in 0...num - 1 {
+            if (userSettings.value(forKey: "\(AID)\(i)events\(eventNum)") as! String?) != nil {
+                let event: String = (userSettings.value(forKey: "\(AID)\(i)events\(eventNum)") as! String?)!
+                events.append(event)
+            }
         }
         for i in 0...num - 1 {
             var mark1 = ""
@@ -124,10 +160,12 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 scores.append(score)
             }
         }
-        let event = Event(name: name, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, events: events, marks: marks, scores: scores)
+        if GlobalVariable.measure != metric {
+            metric = !metric
+        }
+        let event = Event(name: name, eventType: eventType, fat: fat, metric: metric, events: events, marks: marks, scores: scores)
         return event
     }
-
     
     @IBAction func calcScorePressed(_ sender: Any) {
         if GlobalVariable.eventType != eventType {

@@ -44,17 +44,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var pickerDistTwo = [String]()
     var pickerDistThree = [String]()
     
-    // save key names
-    let keyAuto = "distChoice"
-    let keyMeasure = "paceDistChoice"
-    let keyTheme = "theme"
-    let keyLapDist = "lapDist"
+    
     let userSettings = UserDefaults.standard
     
     // set big view height to be 35% of screen
     let height = UIScreen.main.bounds.size.height
     let width = UIScreen.main.bounds.size.width
 
+    @IBOutlet var scrollLbl: UILabel!
+    
     // table and picker outlets
     @IBOutlet var eventsTbl: UITableView!
     @IBOutlet var timePicker: UIPickerView!
@@ -122,22 +120,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // set arrays picker and table
         setArrays()
         
-        // set varables if values were saved
-        if (userSettings.value(forKey: keyAuto) as! Bool?) != nil {
-            GlobalVariable.auto = (userSettings.value(forKey: keyAuto) as! Bool?)!
-        }
-        if (userSettings.value(forKey: keyMeasure) as! Bool?) != nil {
-            GlobalVariable.measure = (userSettings.value(forKey: keyMeasure) as! Bool?)!
-        }
-        if (userSettings.value(forKey: keyTheme) as! String?) != nil {
-            GlobalVariable.theme = (userSettings.value(forKey: keyTheme) as! String?)!
-        }
-        if (userSettings.value(forKey: keyLapDist) as! Double?) != nil {
-            GlobalVariable.distStepperVal = (userSettings.value(forKey: keyLapDist) as! Double?)!
-        }
-        if (userSettings.value(forKey: GlobalVariable.keyAthletes) as! [Athlete]?) != nil {
-            GlobalVariable.athletesArray = (userSettings.value(forKey: GlobalVariable.keyAthletes) as! [Athlete]?)!
-        }
+        
         
     }
     // each multi has a set of events and these are the sets for each event
@@ -227,6 +210,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     // on row select
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        scrollLbl.isHidden = true
         // decide which picker view to hide
         var hidden = false
         if eventsArr[indexPath.row].contains("0") {

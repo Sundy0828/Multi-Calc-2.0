@@ -31,6 +31,8 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
     let height = UIScreen.main.bounds.size.height
     let width = UIScreen.main.bounds.size.width
     
+    @IBOutlet var scrollLbl: UILabel!
+    
     // table and picker outlets
     @IBOutlet var eventsTbl: UITableView!
     @IBOutlet var timePicker: UIPickerView!
@@ -80,9 +82,17 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         // hide pickers
         timePicker.isHidden = true
         distPicker.isHidden = true
-        
-        // set events based on what event type user chose
-        setEventsArray(eventSelected: athleteEvent.eventType)
+        // convert distances
+        for i in 0...athleteEvent.events.count - 1 {
+            if !athleteEvent.events[i].contains("0") {
+                athleteEvent.marks[i] = convertDistance(mark: athleteEvent.marks[i], metric: athleteEvent.metric)
+            }
+        }
+        // save athletes
+        for i in 0...GlobalVariable.athletesArray.count - 1 {
+            GlobalVariable.athletesArray[i].saveAthlete(id: i)
+        }
+        athleteEvent.metric = GlobalVariable.measure
         
         // set arrays picker and table
         setArrays()
@@ -90,41 +100,55 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         // calc score
         calcScore()
     }
-    
-    // each multi has a set of events and these are the sets for each event
-    func setEventsArray(eventSelected : String) {
-        switch (eventSelected) {
-        case "Mens Outdoor Dec" :
-            athleteEvent.events = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
-            sex = "men"
-            break;
-        case "Mens Outdoor Pen" :
-            athleteEvent.events = ["LJ", "JT", "200", "DT", "1500"]
-            sex = "men"
-            break;
-        case "Mens Indoor Hep" :
-            athleteEvent.events = ["60", "LJ", "SP", "HJ", "60H", "PV", "1000"]
-            sex = "men"
-            break;
-        case "Mens Indoor Pen" :
-            athleteEvent.events = ["60H", "LJ", "SP", "HJ", "1000"]
-            sex = "men"
-            break;
-        case "Womens Outdoor Hep" :
-            athleteEvent.events = ["100H", "HJ", "SP", "200", "LJ", "JT", "800"]
-            sex = "women"
-            break;
-        case "Womens Outdoor Dec" :
-            athleteEvent.events = ["100", "DT", "PV", "JT", "400", "100H", "LJ", "SP", "HJ", "1500"]
-            sex = "women"
-            break;
-        case "Womens Indoor Pen" :
-            athleteEvent.events = ["60H", "HJ", "SP", "LJ", "800"]
-            sex = "women"
-            break;
-        default:
-            athleteEvent.events = [String]()
+    // convert distance
+    func convertDistance(mark: [String], metric: Bool) -> [String] {
+        var hold = Double(mark[0] + "." + mark[1] + mark[2])!
+        if GlobalVariable.measure != metric {
+            if GlobalVariable.measure {
+                hold = convertToMeter(mark: mark)
+            }else {
+                hold = convertToFeet(mark: mark)
+            }
         }
+        
+        
+        let one = Int(hold)
+        let two = (hold - Double(one)) * 10
+        let three = (two - Double(Int(two))) * 10
+        
+        return [String(Int(one)), String(Int(two)), String(Int(three.rounded()))]
+    }
+    // convert to feet
+    func convertToFeet(mark: [String]) -> Double {
+        var returnVal = 0.0
+        let convertFeet = 3.280839895
+        
+        let partOne = mark[0]
+        let partTwo = mark[1]
+        let partThree = mark[2]
+        
+        if partOne != "" || partTwo != "" || partThree != "" {
+            returnVal = Double(partOne + "." + partTwo + partThree)!
+        }
+        returnVal = returnVal * convertFeet
+        
+        return returnVal
+    }
+    // convert to meter
+    func convertToMeter(mark: [String]) -> Double {
+        var returnVal = 0.0
+        let convertFeet = 3.280839895
+        
+        let partOne = mark[0]
+        let partTwo = mark[1]
+        let partThree = mark[2]
+        
+        if partOne != "" || partTwo != "" || partThree != "" {
+            returnVal = Double(partOne + "." + partTwo + partThree)!
+        }
+        returnVal = returnVal / convertFeet
+        
+        return returnVal
     }
     
     //
@@ -178,16 +202,25 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     // on row select
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        scrollLbl.isHidden = true
         // decide which picker view to hide
         var hidden = false
-        if athleteEvent.events[indexPath.row].contains("0") {
+        // set value to one clicked to know which one to turn gray and refresh table
+        eventClicked = indexPath.row
+        if athleteEvent.events[eventClicked].contains("0") {
             hidden = true
+            timePicker.selectRow(Int(athleteEvent.marks[eventClicked][0])!, inComponent: 0, animated: false)
+            timePicker.selectRow(Int(athleteEvent.marks[eventClicked][1])!, inComponent: 1, animated: false)
+            timePicker.selectRow(Int(athleteEvent.marks[eventClicked][2])!, inComponent: 2, animated: false)
+        }else {
+            distPicker.selectRow(Int(athleteEvent.marks[eventClicked][0])!, inComponent: 0, animated: false)
+            distPicker.selectRow(Int(athleteEvent.marks[eventClicked][1])!, inComponent: 1, animated: false)
+            distPicker.selectRow(Int(athleteEvent.marks[eventClicked][2])!, inComponent: 2, animated: false)
         }
         timePicker.isHidden = !hidden
         distPicker.isHidden = hidden
         
-        // set value to one clicked to know which one to turn gray and refresh table
-        eventClicked = indexPath.row
+        
         
         eventsTbl.reloadData()
     }
