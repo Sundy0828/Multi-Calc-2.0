@@ -14,15 +14,17 @@ class Event {
     var eventType: String
     var fat: Bool
     var metric: Bool
+    var trackSize: Double
     var events: [String]
     var marks: [[String]]
     var scores: [String]
     
-    init(name: String, eventType: String, fat: Bool, metric: Bool, events: [String], marks: [[String]], scores: [String]) {
+    init(name: String, eventType: String, fat: Bool, metric: Bool, trackSize: Double, events: [String], marks: [[String]], scores: [String]) {
         self.name = name
         self.eventType = eventType
         self.fat = fat
         self.metric = metric
+        self.trackSize = trackSize
         self.events = events
         self.marks = marks
         self.scores = scores
@@ -36,6 +38,7 @@ class Event {
         userSettings.set(eventType, forKey: "\(AID)eventType\(id)")
         userSettings.set(fat, forKey: "\(AID)fat\(id)")
         userSettings.set(metric, forKey: "\(AID)metric\(id)")
+        userSettings.set(trackSize, forKey: "\(AID)trackSize\(id)")
         var num = 1
         if eventType.contains("Dec") {
             num = 10

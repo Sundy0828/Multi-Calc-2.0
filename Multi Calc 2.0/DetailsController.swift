@@ -17,6 +17,7 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
     var sex = "men"
     let convertFeet = 3.280839895
     var totScore = 0
+    var eventsArr = [String]()
     
     // picker values
     var pickerTimeOne = [String]()
@@ -82,17 +83,32 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         // hide pickers
         timePicker.isHidden = true
         distPicker.isHidden = true
-        // convert distances
+        // set events based on what event type user chose
+        setEventsArray(eventSelected: athleteEvent.eventType)
+        
+        // convert distances and get points based off of settings values
         for i in 0...athleteEvent.events.count - 1 {
             if !athleteEvent.events[i].contains("0") {
                 athleteEvent.marks[i] = convertDistance(mark: athleteEvent.marks[i], metric: athleteEvent.metric)
             }
+            let points = getPoints(event: athleteEvent.events[i], selected: i)
+            if !points.isNaN {
+                if Int(athleteEvent.marks[i][0]) != 0 || Int(athleteEvent.marks[i][1]) != 0 || Int(athleteEvent.marks[i][2]) != 0 {
+                    athleteEvent.scores[i] = String(Int(points))
+                }else {
+                    athleteEvent.scores[i] = "0000"
+                }
+                
+            }
         }
+        
+        athleteEvent.metric = GlobalVariable.measure
+        athleteEvent.fat = GlobalVariable.auto
+        athleteEvent.trackSize = GlobalVariable.distStepperVal
         // save athletes
         for i in 0...GlobalVariable.athletesArray.count - 1 {
             GlobalVariable.athletesArray[i].saveAthlete(id: i)
         }
-        athleteEvent.metric = GlobalVariable.measure
         
         // set arrays picker and table
         setArrays()
@@ -149,6 +165,41 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         returnVal = returnVal / convertFeet
         
         return returnVal
+    }
+    // each multi has a set of events and these are the sets for each event
+    func setEventsArray(eventSelected : String) {
+        switch (eventSelected) {
+        case "Mens Outdoor Dec" :
+            eventsArr = ["100", "LJ", "SP", "HJ", "400", "110H", "DT", "PV", "JT", "1500"]
+            sex = "men"
+            break;
+        case "Mens Outdoor Pen" :
+            eventsArr = ["LJ", "JT", "200", "DT", "1500"]
+            sex = "men"
+            break;
+        case "Mens Indoor Hep" :
+            eventsArr = ["60", "LJ", "SP", "HJ", "60H", "PV", "1000"]
+            sex = "men"
+            break;
+        case "Mens Indoor Pen" :
+            eventsArr = ["60H", "LJ", "SP", "HJ", "1000"]
+            sex = "men"
+            break;
+        case "Womens Outdoor Hep" :
+            eventsArr = ["100H", "HJ", "SP", "200", "LJ", "JT", "800"]
+            sex = "women"
+            break;
+        case "Womens Outdoor Dec" :
+            eventsArr = ["100", "DT", "PV", "JT", "400", "100H", "LJ", "SP", "HJ", "1500"]
+            sex = "women"
+            break;
+        case "Womens Indoor Pen" :
+            eventsArr = ["60H", "HJ", "SP", "LJ", "800"]
+            sex = "women"
+            break;
+        default:
+            eventsArr = [String]()
+        }
     }
     
     //
@@ -632,7 +683,9 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         totScore = 0
         for i in 0...athleteEvent.events.count - 1 {
             let hold = athleteEvent.scores[i]
+            print(totScore)
             totScore = totScore + Int(hold)!
+            print(totScore)
             self.title = "Score - " + String(totScore)
         }
     }

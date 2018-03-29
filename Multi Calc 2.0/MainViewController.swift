@@ -107,6 +107,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         var eventType = String()
         var fat = Bool()
         var metric = Bool()
+        var trackSize = Double()
         var events = [String]()
         var marks = [[String]]()
         var scores = [String]()
@@ -122,6 +123,9 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
         if (userSettings.value(forKey: "\(AID)metric\(eventNum)") as! Bool?) != nil {
             metric = (userSettings.value(forKey: "\(AID)metric\(eventNum)") as! Bool?)!
+        }
+        if (userSettings.value(forKey: "\(AID)trackSize\(eventNum)") as! Double?) != nil {
+            trackSize = (userSettings.value(forKey: "\(AID)trackSize\(eventNum)") as! Double?)!
         }
         
         var num = 1
@@ -163,7 +167,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         if GlobalVariable.measure != metric {
             metric = !metric
         }
-        let event = Event(name: name, eventType: eventType, fat: fat, metric: metric, events: events, marks: marks, scores: scores)
+        let event = Event(name: name, eventType: eventType, fat: fat, metric: metric, trackSize: trackSize, events: events, marks: marks, scores: scores)
         return event
     }
     

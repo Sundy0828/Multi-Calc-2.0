@@ -45,7 +45,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         if eventName.text != "" {
             let athleteIndex = GlobalVariable.athletesArray.count - 1
             let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
-            let event = Event(name: eventName.text!, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, events: setEventsArray(eventSelected: eventType), marks: [[String]](), scores: [String]())
+            let event = Event(name: eventName.text!, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, trackSize: GlobalVariable.distStepperVal, events: setEventsArray(eventSelected: eventType), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
             // set athlete event to specific event
             let athleteEvent = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[id]
