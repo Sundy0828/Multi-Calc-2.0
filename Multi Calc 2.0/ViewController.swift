@@ -28,6 +28,8 @@ struct GlobalVariable{
 }
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+    static var metric = true
+    var changed = false
     
     // base values for function
     var eventClicked = -1
@@ -120,8 +122,76 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // set arrays picker and table
         setArrays()
         
+        // convert distances and get points based off of settings values
+        for i in 0...eventsArr.count - 1 {
+            if !eventsArr[i].contains("0") {
+                GlobalVariable.markArray[i] = convertDistance(mark: GlobalVariable.markArray[i], metric: ViewController.metric)
+            }
+            let points = getPoints(event: eventsArr[i], selected: i)
+            if !points.isNaN {
+                if Int(GlobalVariable.markArray[i][0]) != 0 || Int(GlobalVariable.markArray[i][1]) != 0 || Int(GlobalVariable.markArray[i][2]) != 0 {
+                    GlobalVariable.scoreArray[i] = String(Int(points))
+                }else {
+                    GlobalVariable.scoreArray[i] = "0000"
+                }
+                
+            }
+        }
+        
+        // calc score
+        calcScore()
+        
+    }
+    // convert distance
+    func convertDistance(mark: [String], metric: Bool) -> [String] {
+        var hold = Double(mark[0] + "." + mark[1] + mark[2])!
+        if GlobalVariable.measure != metric {
+            if GlobalVariable.measure {
+                hold = convertToMeter(mark: mark)
+            }else {
+                hold = convertToFeet(mark: mark)
+            }
+            changed = true
+        }
         
         
+        let one = Int(hold)
+        let two = (hold - Double(one)) * 10
+        let three = (two - Double(Int(two))) * 10
+        
+        return [String(Int(one)), String(Int(two)), String(Int(three.rounded()))]
+    }
+    // convert to feet
+    func convertToFeet(mark: [String]) -> Double {
+        var returnVal = 0.0
+        let convertFeet = 3.280839895
+        
+        let partOne = mark[0]
+        let partTwo = mark[1]
+        let partThree = mark[2]
+        
+        if partOne != "" || partTwo != "" || partThree != "" {
+            returnVal = Double(partOne + "." + partTwo + partThree)!
+        }
+        returnVal = returnVal * convertFeet
+        
+        return returnVal
+    }
+    // convert to meter
+    func convertToMeter(mark: [String]) -> Double {
+        var returnVal = 0.0
+        let convertFeet = 3.280839895
+        
+        let partOne = mark[0]
+        let partTwo = mark[1]
+        let partThree = mark[2]
+        
+        if partOne != "" || partTwo != "" || partThree != "" {
+            returnVal = Double(partOne + "." + partTwo + partThree)!
+        }
+        returnVal = returnVal / convertFeet
+        
+        return returnVal
     }
     // each multi has a set of events and these are the sets for each event
     func setEventsArray(eventSelected : String) {
@@ -211,16 +281,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // on row select
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         scrollLbl.isHidden = true
+        // set value to one clicked to know which one to turn gray and refresh table
+        eventClicked = indexPath.row
         // decide which picker view to hide
         var hidden = false
-        if eventsArr[indexPath.row].contains("0") {
+        if eventsArr[eventClicked].contains("0") {
             hidden = true
+            timePicker.selectRow(Int(GlobalVariable.markArray[eventClicked][0])!, inComponent: 0, animated: false)
+            timePicker.selectRow(Int(GlobalVariable.markArray[eventClicked][1])!, inComponent: 1, animated: false)
+            timePicker.selectRow(Int(GlobalVariable.markArray[eventClicked][2])!, inComponent: 2, animated: false)
+        }else {
+            distPicker.selectRow(Int(GlobalVariable.markArray[eventClicked][0])!, inComponent: 0, animated: false)
+            distPicker.selectRow(Int(GlobalVariable.markArray[eventClicked][1])!, inComponent: 1, animated: false)
+            distPicker.selectRow(Int(GlobalVariable.markArray[eventClicked][2])!, inComponent: 2, animated: false)
         }
         timePicker.isHidden = !hidden
         distPicker.isHidden = hidden
         
-        // set value to one clicked to know which one to turn gray and refresh table
-        eventClicked = indexPath.row
+        
         
         eventsTbl.reloadData()
     }
