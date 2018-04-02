@@ -16,6 +16,7 @@ class EventListController: UITableViewController {
         tableView.reloadData()
         // set title
         self.title = "\(athleteEvents.fName)'s Events"
+        tableView.backgroundColor = GlobalVariable.backgroundColor
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,11 +86,15 @@ class EventListController: UITableViewController {
     // set table rows
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventListCell") as? CustomEventCell
-        
+        cell?.backgroundColor = GlobalVariable.backgroundColor
+        cell?.title.textColor = GlobalVariable.textColor
         // put in name and array
         cell?.title.text = athleteEvents.events[indexPath.row].name
         cell?.subtitle.text = athleteEvents.events[indexPath.row].eventType
         cell?.arrowImage.image = #imageLiteral(resourceName: "blackArrow")
+        if GlobalVariable.theme == "dark" {
+            cell?.arrowImage.image = #imageLiteral(resourceName: "whiteArrow")
+        }
         
         return cell!
     }

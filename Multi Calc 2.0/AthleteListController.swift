@@ -15,6 +15,7 @@ class AthleteListController: UITableViewController {
         tableView.reloadData()
         // set title
         self.title = "Athletes"
+        tableView.backgroundColor = GlobalVariable.backgroundColor
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,10 +88,14 @@ class AthleteListController: UITableViewController {
     // set table rows
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "athleteListCell")
-        
+        cell?.backgroundColor = GlobalVariable.backgroundColor
         // put in name and array
         cell?.textLabel?.text = GlobalVariable.athletesArray[indexPath.row].fullName()
-        let image = UIImageView(image: #imageLiteral(resourceName: "blackArrow"))
+        cell?.textLabel?.textColor = GlobalVariable.textColor
+        var image = UIImageView(image: #imageLiteral(resourceName: "blackArrow"))
+        if GlobalVariable.theme == "dark" {
+            image = UIImageView(image: #imageLiteral(resourceName: "whiteArrow"))
+        }
         image.bounds.size.height = 49
         image.bounds.size.width = 49
         cell?.accessoryView = image

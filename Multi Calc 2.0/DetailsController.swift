@@ -34,6 +34,10 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet var scrollLbl: UILabel!
     
+    @IBOutlet var eventLbl: UILabel!
+    @IBOutlet var markLbl: UILabel!
+    @IBOutlet var scoreLbl: UILabel!
+    
     // table and picker outlets
     @IBOutlet var eventsTbl: UITableView!
     @IBOutlet var timePicker: UIPickerView!
@@ -66,6 +70,13 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        changeTheme()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
+            self?.eventsTbl.reloadData()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -221,9 +232,12 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         if !GlobalVariable.measure {
             measure = "ft"
         }
+        cell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        let cellHeight = cell.cellView.frame.height
+        let cellWidth = cell.cellView.frame.width
         
         // set corner radius to half of height
-        let corner = cell.cellView.frame.height/2
+        let corner = cellHeight/2
         cell.cellView.layer.cornerRadius = corner
         cell.cellView.clipsToBounds = true
         
@@ -235,9 +249,11 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         
         // set calc label and round corners
-        cell.calcLbl.text = "Calculate \(athleteEvent.events[indexPath.row])"
+        cell.calcLbl.text = "Enter \(athleteEvent.events[indexPath.row])"
         cell.calcLbl.layer.cornerRadius = corner
         cell.calcLbl.clipsToBounds = true
+        // set blue label width but it goes to thr right width after a table is selected
+        cell.calcLbl.frame.size.width = 171/345*cellWidth
         
         // set marks based if it needs a time or distance
         if athleteEvent.events[indexPath.row].contains("0") {
@@ -688,6 +704,14 @@ class DetailsController: UIViewController, UITableViewDelegate, UITableViewDataS
             print(totScore)
             self.title = "Score - " + String(totScore)
         }
+    }
+    func changeTheme() {
+        eventLbl.textColor = GlobalVariable.textColor
+        markLbl.textColor = GlobalVariable.textColor
+        scoreLbl.textColor = GlobalVariable.textColor
+        scrollLbl.textColor = GlobalVariable.textColor
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+        eventsTbl.backgroundColor = GlobalVariable.backgroundColor
     }
 }
 

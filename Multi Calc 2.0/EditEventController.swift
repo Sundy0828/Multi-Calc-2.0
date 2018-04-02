@@ -27,6 +27,8 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
         if let tabController = self.parent as? UITabBarController {
             tabController.navigationItem.title = "Add Event"
         }
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+        eventTbl.backgroundColor = GlobalVariable.backgroundColor
     }
     // make text limit 25
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -52,7 +54,7 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
-            let athleteIndex = GlobalVariable.athletesArray.count - 1
+            //let athleteIndex = GlobalVariable.athletesArray.count - 1
             // set event name and event type in array
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].name = eventName.text!
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[GlobalVariable.eventsIndex].eventType = eventType
@@ -79,12 +81,12 @@ class EditEventController: UIViewController, UITableViewDataSource, UITableViewD
     }
     // set table rows
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let myGray = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha:1.0)
+        //let myGray = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha:1.0)
         // set background to cell and view
         let view = UIView()
-        view.backgroundColor = myGray
+        view.backgroundColor = GlobalVariable.backgroundColor
         let cell = UITableViewCell()
-        cell.backgroundColor = myGray
+        cell.backgroundColor = GlobalVariable.backgroundColor
         
         // set icon image
         let image = UIImageView(image: #imageLiteral(resourceName: "whiteGear"))

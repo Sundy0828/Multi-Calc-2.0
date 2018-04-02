@@ -9,6 +9,32 @@
 import UIKit
 import UserNotifications
 
+// global variables used throughout app
+struct GlobalVariable{
+    static let myBlue = UIColor(red: 51/255, green: 161/255, blue: 252/255, alpha:1.0)
+    static var markArray = [[String]]()
+    static var scoreArray = [String]()
+    static var measure : Bool = true
+    static var auto : Bool = true
+    static var theme : String = "light"
+    static var distStepperVal : Double = 400.0
+    static var athletesArray = [Athlete]()
+    static var athletesIndex = -1
+    static var keyAthletes = "athletesArray"
+    static var eventsIndex = -1
+    static var eventType = ""
+    static var totAthletes = 0
+    static var totEvents = [Int]()
+    static var totAthleteEvents = 0
+    static var textColor = UIColor.black
+    static var backgroundColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
+    static var menuColor = GlobalVariable.myBlue
+    static var subtextColor = GlobalVariable.myBlue
+    static var tableViewColor = UIColor.white
+    static var tableViewBtnColor = UIColor.darkGray
+    static var tableHeaderColor = UIColor.white
+}
+
 class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // avaliable events
@@ -23,6 +49,12 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     @IBOutlet var pickerView: UIPickerView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        changeTheme()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // ask to allow alerts
@@ -78,6 +110,22 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 GlobalVariable.athletesArray.append(athlete)
             }
         }
+        if GlobalVariable.theme == "light" {
+            GlobalVariable.textColor = UIColor.black
+            GlobalVariable.backgroundColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
+            GlobalVariable.menuColor = GlobalVariable.myBlue
+            GlobalVariable.subtextColor = GlobalVariable.myBlue
+            GlobalVariable.tableViewColor = UIColor.white
+            GlobalVariable.tableViewBtnColor = UIColor.darkGray
+        }else {
+            GlobalVariable.textColor = UIColor.white
+            GlobalVariable.backgroundColor = UIColor.darkGray
+            GlobalVariable.menuColor = GlobalVariable.myBlue
+            GlobalVariable.subtextColor = GlobalVariable.myBlue
+            GlobalVariable.tableViewColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
+            GlobalVariable.tableViewBtnColor = UIColor.lightGray
+        }
+        changeTheme()
         
     }
     // get data for all athletes
@@ -198,8 +246,12 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             pickerLabel?.textAlignment = .center
         }
         pickerLabel?.text = events[row]
-        pickerLabel?.textColor = UIColor.black
+        pickerLabel?.textColor = GlobalVariable.textColor
         
         return pickerLabel!
+    }
+    
+    func changeTheme() {
+        self.view.backgroundColor = GlobalVariable.backgroundColor
     }
 }

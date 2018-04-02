@@ -15,12 +15,15 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
     
     let userSettings = UserDefaults.standard
     
+    @IBOutlet var fNameLbl: UILabel!
+    @IBOutlet var lNameLbl: UILabel!
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // hide keyboard and change title
         self.hideKeyboardWhenTappedAround()
         self.athleteName.delegate = self
         self.athleteLastName.delegate = self
+        changeTheme()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,5 +104,11 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
                 completion(true)
             }
         }
+    }
+    
+    func changeTheme() {
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+        fNameLbl.textColor = GlobalVariable.textColor
+        lNameLbl.textColor = GlobalVariable.textColor
     }
 }

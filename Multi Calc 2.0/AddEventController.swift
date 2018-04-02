@@ -27,6 +27,8 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         // hide keyboard and set title
         self.hideKeyboardWhenTappedAround()
         self.eventName.delegate = self
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+        eventTbl.backgroundColor = GlobalVariable.backgroundColor
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +45,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     // add event to athlete
     @IBAction func addEventPressed(_ sender: Any) {
         if eventName.text != "" {
-            let athleteIndex = GlobalVariable.athletesArray.count - 1
+            //let athleteIndex = GlobalVariable.athletesArray.count - 1
             let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
             let event = Event(name: eventName.text!, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, trackSize: GlobalVariable.distStepperVal, events: setEventsArray(eventSelected: eventType), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
@@ -134,12 +136,12 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     // set table rows
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let myGray = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha:1.0)
+        //let myGray = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha:1.0)
         // set background to cell and view
         let view = UIView()
-        view.backgroundColor = myGray
+        view.backgroundColor = GlobalVariable.backgroundColor
         let cell = UITableViewCell()
-        cell.backgroundColor = myGray
+        cell.backgroundColor = GlobalVariable.backgroundColor
         
         // set icon image
         let image = UIImageView(image: #imageLiteral(resourceName: "whiteGear"))

@@ -13,9 +13,11 @@ class EditAthleteController: UIViewController, UITextFieldDelegate {
     @IBOutlet var athleteName: UITextField!
     @IBOutlet var athleteLastName: UITextField!
     
+    @IBOutlet var fNameLbl: UILabel!
+    @IBOutlet var lNameLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        changeTheme()
         athleteName.delegate = self
         self.hideKeyboardWhenTappedAround()
         // set text to whatever the name is
@@ -31,7 +33,7 @@ class EditAthleteController: UIViewController, UITextFieldDelegate {
     // set changes in array
     @IBAction func donePressed(_ sender: Any) {
         if athleteName.text != "" {
-            let athleteIndex = GlobalVariable.athletesArray.count - 1
+            //let athleteIndex = GlobalVariable.athletesArray.count - 1
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].fName = athleteName.text!
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].lName = athleteLastName.text!
             
@@ -55,5 +57,10 @@ class EditAthleteController: UIViewController, UITextFieldDelegate {
         alertController.addAction(OKAction)
         //shows
         self.present(alertController, animated: true, completion: nil)
+    }
+    func changeTheme() {
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+        fNameLbl.textColor = GlobalVariable.textColor
+        lNameLbl.textColor = GlobalVariable.textColor
     }
 }

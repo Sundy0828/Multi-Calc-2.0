@@ -8,25 +8,6 @@
 
 import UIKit
 
-// global variables used throughout app
-struct GlobalVariable{
-    static let myBlue = UIColor(red: 51/255, green: 161/255, blue: 252/255, alpha:1.0)
-    static var markArray = [[String]]()
-    static var scoreArray = [String]()
-    static var measure : Bool = true
-    static var auto : Bool = true
-    static var theme : String = "light"
-    static var distStepperVal : Double = 400.0
-    static var athletesArray = [Athlete]()
-    static var athletesIndex = -1
-    static var keyAthletes = "athletesArray"
-    static var eventsIndex = -1
-    static var eventType = ""
-    static var totAthletes = 0
-    static var totEvents = [Int]()
-    static var totAthleteEvents = 0
-}
-
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
     static var metric = true
     var changed = false
@@ -54,6 +35,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let width = UIScreen.main.bounds.size.width
 
     @IBOutlet var scrollLbl: UILabel!
+    
+    @IBOutlet var eventLbl: UILabel!
+    @IBOutlet var markLbl: UILabel!
+    @IBOutlet var scoreLbl: UILabel!
     
     // table and picker outlets
     @IBOutlet var eventsTbl: UITableView!
@@ -98,7 +83,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         }
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        changeTheme()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
+            self?.eventsTbl.reloadData()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -248,23 +239,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if !GlobalVariable.measure {
             measure = "ft"
         }
+        cell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        let cellHeight = cell.cellView.frame.height
+        let cellWidth = cell.cellView.frame.width
         
         // set corner radius to half of height
-        let corner = cell.cellView.frame.height/2
+        let corner = cellHeight/2
         cell.cellView.layer.cornerRadius = corner
         cell.cellView.clipsToBounds = true
+        cell.cellView.backgroundColor = GlobalVariable.tableViewColor
         
         // change blue to gray if cell was clicked
         if indexPath.row == eventClicked {
-            cell.calcLbl.backgroundColor = UIColor.darkGray
+            cell.calcLbl.backgroundColor = GlobalVariable.tableViewBtnColor
         }else {
             cell.calcLbl.backgroundColor = GlobalVariable.myBlue
         }
         
+        
         // set calc label and round courners
-        cell.calcLbl.text = "Calculate \(eventsArr[indexPath.row])"
+        cell.calcLbl.text = "Enter \(eventsArr[indexPath.row])"
         cell.calcLbl.layer.cornerRadius = corner
         cell.calcLbl.clipsToBounds = true
+        // set blue label width but it goes to thr right width after a table is selected
+        cell.calcLbl.frame.size.width = 171/345*cellWidth
         
         // set marks based if it needs a time or distance
         if eventsArr[indexPath.row].contains("0") {
@@ -309,7 +307,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func pickerColorChange(pickerRow: String? = "", unit : String? = "", dec : String? = "") -> UILabel? {
         // set label (color, size, and text)
         let pickerLabel = UILabel()
-        pickerLabel.textColor = UIColor.black
+        pickerLabel.textColor = GlobalVariable.textColor
         pickerLabel.text = dec! + pickerRow! + unit!
         let size = 20/375*width
         pickerLabel.font = UIFont(name: "AvenirNext-Regular", size: size)
@@ -708,6 +706,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             totScore = totScore + Int(hold)!
             self.title = "Score - " + String(totScore)
         }
+    }
+    func changeTheme() {
+        eventLbl.textColor = GlobalVariable.textColor
+        markLbl.textColor = GlobalVariable.textColor
+        scoreLbl.textColor = GlobalVariable.textColor
+        scrollLbl.textColor = GlobalVariable.textColor
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+        eventsTbl.backgroundColor = GlobalVariable.backgroundColor
     }
 }
 

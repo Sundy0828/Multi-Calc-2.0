@@ -47,7 +47,7 @@ class TrackSizeController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
-        //changeTheme()
+        changeTheme()
         
     }
     override func viewDidLoad() {
@@ -191,19 +191,9 @@ class TrackSizeController: UIViewController {
         //shows
         self.present(alertController, animated: true, completion: nil)
     }
-    /*
+    
     func changeTheme() {
-        var textColor : UIColor
-        var bgColor: UIColor
-        // set colors
-        if GlobalVariable.theme == "dark" {
-            bgColor = UIColor.darkGray
-            textColor = .white
-        }else {
-            bgColor = GlobalVariable.silver
-            textColor = .black
-        }
-        self.view.backgroundColor = bgColor
-        lapDist.textColor = textColor
-    }*/
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+        lapDist.textColor = GlobalVariable.textColor
+    }
 }

@@ -18,11 +18,21 @@ class SettingsController: UITableViewController {
     let keyMeasure = "paceDistChoice"
     let keyTheme = "theme"
     let keyLapDist = "lapDist"
+    let textArr = ["Track Size", "Timing", "Measurement", "Theme"]
+    let imgArrL = [#imageLiteral(resourceName: "whiteGear"),#imageLiteral(resourceName: "whiteGear"),#imageLiteral(resourceName: "whiteGear"),#imageLiteral(resourceName: "whiteGear")]
+    let imgArrD = [#imageLiteral(resourceName: "blackArrow"), #imageLiteral(resourceName: "blackArrow"), #imageLiteral(resourceName: "blackArrow"), #imageLiteral(resourceName: "blackArrow")]
     
-    // track size label
+    // cell label
     @IBOutlet weak var trackSizeLbl: UILabel!
+    @IBOutlet var fatTimeLbl: UILabel!
+    @IBOutlet var handTimeLbl: UILabel!
+    @IBOutlet var meterLbl: UILabel!
+    @IBOutlet var feetLbl: UILabel!
+    @IBOutlet var lightLbl: UILabel!
+    @IBOutlet var darkLbl: UILabel!
     
     // cells
+    @IBOutlet var trackSizeCell: UITableViewCell!
     @IBOutlet var fatTimeCell: UITableViewCell!
     @IBOutlet var handTimeCell: UITableViewCell!
     @IBOutlet var meterCell: UITableViewCell!
@@ -34,6 +44,7 @@ class SettingsController: UITableViewController {
         super.viewWillAppear(animated)
         // style cells
         style()
+        changeTheme()
     }
     
     override func viewDidLoad() {
@@ -99,7 +110,28 @@ class SettingsController: UITableViewController {
         trackSizeLbl.text = "\(GlobalVariable.distStepperVal) meters"
         //changeTheme()
     }
-    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        tableView.tableHeaderView?.frame.size.height = 45
+        
+        let view = UIView()
+        
+        let image = UIImageView()
+        image.frame = CGRect(x: 5, y: 5, width: 20, height: 20)
+        
+        let label = UILabel()
+        label.text = textArr[section]
+        label.frame = CGRect(x: 30, y: 5, width: 250, height: 20)
+        
+        image.image = imgArrD[section]
+        
+        view.backgroundColor = GlobalVariable.tableHeaderColor
+        label.textColor = UIColor.black
+        
+        view.addSubview(image)
+        view.addSubview(label)
+        
+        return view
+    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Your action here
         let section = indexPath.section
@@ -126,15 +158,28 @@ class SettingsController: UITableViewController {
             if row == 0 {
                 GlobalVariable.theme = "light"
                 userSettings.set(GlobalVariable.theme, forKey: keyTheme)
-                //navigationController?.navigationBar.barStyle = .default
+                GlobalVariable.textColor = UIColor.black
+                GlobalVariable.backgroundColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
+                GlobalVariable.menuColor = GlobalVariable.myBlue
+                GlobalVariable.subtextColor = GlobalVariable.myBlue
+                GlobalVariable.tableViewColor = UIColor.white
+                GlobalVariable.tableViewBtnColor = UIColor.darkGray
+                GlobalVariable.tableHeaderColor = UIColor.white
             }else if row == 1 {
                 GlobalVariable.theme = "dark"
                 userSettings.set(GlobalVariable.theme, forKey: keyTheme)
-                //navigationController?.navigationBar.barStyle = .black
+                GlobalVariable.textColor = UIColor.white
+                GlobalVariable.backgroundColor = UIColor.darkGray
+                GlobalVariable.menuColor = GlobalVariable.myBlue
+                GlobalVariable.subtextColor = GlobalVariable.myBlue
+                GlobalVariable.tableViewColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
+                GlobalVariable.tableViewBtnColor = UIColor.lightGray
+                GlobalVariable.tableHeaderColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
             }
-            //changeTheme()
+            changeTheme()
         }
         style()
+        tableView.reloadData()
     }
     
     // alert function
@@ -148,5 +193,33 @@ class SettingsController: UITableViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func changeTheme() {
+        trackSizeLbl.textColor = GlobalVariable.textColor
+        fatTimeLbl.textColor = GlobalVariable.textColor
+        handTimeLbl.textColor = GlobalVariable.textColor
+        meterLbl.textColor = GlobalVariable.textColor
+        feetLbl.textColor = GlobalVariable.textColor
+        lightLbl.textColor = GlobalVariable.textColor
+        darkLbl.textColor = GlobalVariable.textColor
+        
+        trackSizeCell.backgroundColor = GlobalVariable.backgroundColor
+        fatTimeCell.backgroundColor = GlobalVariable.backgroundColor
+        handTimeCell.backgroundColor = GlobalVariable.backgroundColor
+        meterCell.backgroundColor = GlobalVariable.backgroundColor
+        feetCell.backgroundColor = GlobalVariable.backgroundColor
+        lightCell.backgroundColor = GlobalVariable.backgroundColor
+        darkCell.backgroundColor = GlobalVariable.backgroundColor
+        
+        trackSizeCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        fatTimeCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        handTimeCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        meterCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        feetCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        lightCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        darkCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        
+        tableView.backgroundColor = GlobalVariable.backgroundColor
+        self.view.backgroundColor = GlobalVariable.backgroundColor
+    }
 }
 
