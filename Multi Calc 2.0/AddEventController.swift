@@ -47,7 +47,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         if eventName.text != "" {
             //let athleteIndex = GlobalVariable.athletesArray.count - 1
             let id = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.count
-            let event = Event(name: eventName.text!, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, trackSize: GlobalVariable.distStepperVal, events: setEventsArray(eventSelected: eventType), marks: [[String]](), scores: [String]())
+            let event = Event(name: eventName.text!.capitalized, eventType: eventType, fat: GlobalVariable.auto, metric: GlobalVariable.measure, trackSize: GlobalVariable.distStepperVal, events: setEventsArray(eventSelected: eventType), marks: [[String]](), scores: [String]())
             GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events.append(event)
             // set athlete event to specific event
             let athleteEvent = GlobalVariable.athletesArray[GlobalVariable.athletesIndex].events[id]
@@ -68,7 +68,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
             // show notification that event was added
-            timedNotifications(inSeconds: 0.1, name: eventName.text!, eventType: eventType) { (success) in
+            timedNotifications(inSeconds: 0.1, name: eventName.text!.capitalized, eventType: eventType) { (success) in
                 if success {
                     print("Successfully Notified")
                 }
@@ -154,6 +154,7 @@ class AddEventController: UIViewController, UITableViewDataSource, UITableViewDe
         let label = UILabel()
         label.text = events[indexPath.row]
         label.font = font
+        label.textColor = GlobalVariable.textColor
         label.frame = CGRect(x: 45, y: 5, width: 250, height: 35)
         view.addSubview(label)
         

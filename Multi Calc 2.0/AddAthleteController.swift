@@ -46,8 +46,8 @@ class AddAthleteController: UIViewController, UITextFieldDelegate {
     @IBAction func addAthletePressed(_ sender: Any) {
         if athleteName.text != "" {
             // add values to athlete array and set textfield to ""
-            let firstName = athleteName.text!
-            let lastName = athleteLastName.text!
+            let firstName = athleteName.text!.capitalized
+            let lastName = athleteLastName.text!.capitalized
             // set athlete and add it to the array
             let athlete: Athlete = Athlete(fName: firstName, lName: lastName, events: [Event]())
             let athleteIndex = GlobalVariable.athletesArray.count

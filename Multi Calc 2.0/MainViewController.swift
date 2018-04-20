@@ -117,6 +117,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             GlobalVariable.subtextColor = GlobalVariable.myBlue
             GlobalVariable.tableViewColor = UIColor.white
             GlobalVariable.tableViewBtnColor = UIColor.darkGray
+            GlobalVariable.tableHeaderColor = UIColor.white
         }else {
             GlobalVariable.textColor = UIColor.white
             GlobalVariable.backgroundColor = UIColor.darkGray
@@ -124,6 +125,7 @@ class MainViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             GlobalVariable.subtextColor = GlobalVariable.myBlue
             GlobalVariable.tableViewColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
             GlobalVariable.tableViewBtnColor = UIColor.lightGray
+            GlobalVariable.tableHeaderColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
         }
         changeTheme()
         

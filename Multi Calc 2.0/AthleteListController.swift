@@ -37,7 +37,7 @@ class AthleteListController: UITableViewController {
             GlobalVariable.athletesIndex = indexPath.row
             self.performSegue(withIdentifier: "editAthlete", sender: self)
         }
-        action.backgroundColor = UIColor.darkGray
+        action.backgroundColor = GlobalVariable.tableViewBtnColor
         
         return action
     }
@@ -45,7 +45,7 @@ class AthleteListController: UITableViewController {
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
             // Declare Alert
-            let dialogMessage = UIAlertController(title: "Reset", message: "Are you sure you want to reset the settings?", preferredStyle: .alert)
+            let dialogMessage = UIAlertController(title: "Reset", message: "Are you sure you want to delete this user?", preferredStyle: .alert)
             
             // Create OK button with action handler
             let ok = UIAlertAction(title: "Yes", style: .default, handler: { (action) -> Void in

@@ -108,7 +108,7 @@ class SettingsController: UITableViewController {
         
         // set distance text
         trackSizeLbl.text = "\(GlobalVariable.distStepperVal) meters"
-        //changeTheme()
+        changeTheme()
     }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         tableView.tableHeaderView?.frame.size.height = 45
@@ -176,10 +176,12 @@ class SettingsController: UITableViewController {
                 GlobalVariable.tableViewBtnColor = UIColor.lightGray
                 GlobalVariable.tableHeaderColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
             }
-            changeTheme()
+            //changeTheme()
         }
         style()
-        tableView.reloadData()
+        changeTheme()
+        style()
+        //tableView.reloadData()
     }
     
     // alert function
@@ -194,32 +196,45 @@ class SettingsController: UITableViewController {
     }
     
     func changeTheme() {
-        trackSizeLbl.textColor = GlobalVariable.textColor
-        fatTimeLbl.textColor = GlobalVariable.textColor
-        handTimeLbl.textColor = GlobalVariable.textColor
-        meterLbl.textColor = GlobalVariable.textColor
-        feetLbl.textColor = GlobalVariable.textColor
-        lightLbl.textColor = GlobalVariable.textColor
-        darkLbl.textColor = GlobalVariable.textColor
+        var cellColor: UIColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0)
+        var cellTextColor: UIColor = UIColor.black
+        if GlobalVariable.theme == "dark" {
+            cellColor = UIColor.darkGray
+            cellTextColor = UIColor.white
+        }
         
-        trackSizeCell.backgroundColor = GlobalVariable.backgroundColor
-        fatTimeCell.backgroundColor = GlobalVariable.backgroundColor
-        handTimeCell.backgroundColor = GlobalVariable.backgroundColor
-        meterCell.backgroundColor = GlobalVariable.backgroundColor
-        feetCell.backgroundColor = GlobalVariable.backgroundColor
-        lightCell.backgroundColor = GlobalVariable.backgroundColor
-        darkCell.backgroundColor = GlobalVariable.backgroundColor
+        trackSizeLbl.textColor = cellTextColor
+        fatTimeLbl.textColor = cellTextColor
+        handTimeLbl.textColor = cellTextColor
+        meterLbl.textColor = cellTextColor
+        feetLbl.textColor = cellTextColor
+        lightLbl.textColor = cellTextColor
+        darkLbl.textColor = cellTextColor
         
-        trackSizeCell.contentView.backgroundColor = GlobalVariable.backgroundColor
-        fatTimeCell.contentView.backgroundColor = GlobalVariable.backgroundColor
-        handTimeCell.contentView.backgroundColor = GlobalVariable.backgroundColor
-        meterCell.contentView.backgroundColor = GlobalVariable.backgroundColor
-        feetCell.contentView.backgroundColor = GlobalVariable.backgroundColor
-        lightCell.contentView.backgroundColor = GlobalVariable.backgroundColor
-        darkCell.contentView.backgroundColor = GlobalVariable.backgroundColor
+        trackSizeCell.backgroundColor = cellColor
+        fatTimeCell.backgroundColor = cellColor
+        handTimeCell.backgroundColor = cellColor
+        meterCell.backgroundColor = cellColor
+        feetCell.backgroundColor = cellColor
+        lightCell.backgroundColor = cellColor
+        darkCell.backgroundColor = cellColor
         
-        tableView.backgroundColor = GlobalVariable.backgroundColor
-        self.view.backgroundColor = GlobalVariable.backgroundColor
+        trackSizeCell.contentView.backgroundColor = cellColor
+        fatTimeCell.contentView.backgroundColor = cellColor
+        handTimeCell.contentView.backgroundColor = cellColor
+        meterCell.contentView.backgroundColor = cellColor
+        feetCell.contentView.backgroundColor = cellColor
+        
+        trackSizeCell.tintColor = cellTextColor
+        fatTimeCell.tintColor = cellTextColor
+        handTimeCell.tintColor = cellTextColor
+        meterCell.tintColor = cellTextColor
+        feetCell.tintColor = cellTextColor
+        lightCell.tintColor = cellTextColor
+        darkCell.tintColor = cellTextColor
+        
+        view.backgroundColor = cellColor
+        tableView.reloadData()
     }
 }
 

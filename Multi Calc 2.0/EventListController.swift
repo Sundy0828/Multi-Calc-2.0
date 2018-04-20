@@ -37,7 +37,8 @@ class EventListController: UITableViewController {
             GlobalVariable.eventsIndex = indexPath.row
             self.performSegue(withIdentifier: "editEvent", sender: self)
         }
-        action.backgroundColor = UIColor.darkGray
+        
+        action.backgroundColor = GlobalVariable.tableViewBtnColor
         
         return action
     }
@@ -45,7 +46,7 @@ class EventListController: UITableViewController {
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
             // Declare Alert
-            let dialogMessage = UIAlertController(title: "Reset", message: "Are you sure you want to reset the settings?", preferredStyle: .alert)
+            let dialogMessage = UIAlertController(title: "Reset", message: "Are you sure you want to delete this event?", preferredStyle: .alert)
             
             // Create OK button with action handler
             let ok = UIAlertAction(title: "Yes", style: .default, handler: { (action) -> Void in
